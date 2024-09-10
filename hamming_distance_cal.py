@@ -75,7 +75,7 @@ if __name__ == "__main__":
     plt.legend(fontsize=14)
     # plt.savefig('./results/Hamming_Distance_diff(LRS).png',format = 'PNG' , dpi = 300)
     # plt.savefig('./Hamming_Distance_diff(HRS).png',format = 'PNG' , dpi = 300)
-    # plt.savefig('./Hamming_Distance_same(HRS).png',format = 'PNG' , dpi = 300)
+    plt.savefig('./HD_test(HRS).png',format = 'PNG' , dpi = 300)
     plt.show()
 
 
