@@ -105,8 +105,9 @@ def main_LRS(challenge_size):
     msq_error  = np.sqrt(np.sum((4096 - counts)**2)/len(counts))
     
     plt.text(0.4, 0.4, f'metric  = {msq_error :.2f}', 
-             horizontalalignment='left', verticalalignment='top', 
-             transform=plt.gca().transAxes, fontsize=8, color='k',weight='bold')
+         horizontalalignment='left', verticalalignment='top', 
+         transform=plt.gca().transAxes, fontsize=8, color='k', weight='bold', 
+         bbox=dict(facecolor='white', edgecolor='none', pad=3))
      
     # Display the legend
     plt.legend(loc='lower left', facecolor='white', edgecolor='black', fontsize=10)
@@ -179,8 +180,9 @@ def main_HRS(challenge_size):
     msq_error  = np.sqrt(np.sum((4096 - counts)**2)/len(counts))
     
     plt.text(0.4, 0.4, f'metric  = {msq_error :.2f}', 
-             horizontalalignment='left', verticalalignment='top', 
-             transform=plt.gca().transAxes, fontsize=8, color='k',weight='bold')
+         horizontalalignment='left', verticalalignment='top', 
+         transform=plt.gca().transAxes, fontsize=8, color='k', weight='bold', 
+         bbox=dict(facecolor='white', edgecolor='none', pad=3))
      
     # Display the legend
     plt.legend(loc='lower left', facecolor='white', edgecolor='black', fontsize=10)
