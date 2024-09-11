@@ -20,13 +20,14 @@ res_f = df.to_numpy().flatten()
 
 
 
-print(res_f)
+# print(res_f)
+
 #ref_res = np.median(res_f) #finding the reference resistance
 ref_res=8.1814
 #appending the hrs values to have a larger set of data
 for i in range(10):
     res_f=np.append(res_f,res_f)
-print(len(res_f))
+# print(len(res_f))
 '''
 manually entering the row and col number based on challenge size
 
@@ -143,6 +144,9 @@ def inter_chip(pufs, challenge_row, challenge_col, res_f, row, col, ref_res, col
         responses.append(response)
 
     responses = np.asarray(responses)
+    df = pd.DataFrame(responses)
+    df.to_excel('hamming_distance.xlsx', index=False)
+    
     for i in range(pufs - 1):
         for j in range(i + 1, pufs):
             dist = hamming_distance(responses[i], responses[j])
@@ -150,8 +154,15 @@ def inter_chip(pufs, challenge_row, challenge_col, res_f, row, col, ref_res, col
             distances.append(dist)
     #calculates the inter chip hamming distance
     inter_hd = 2 / (pufs * (pufs - 1) * len(response)) * s * 100
+    
+
+    
     #considering it in percentage form
     distances = [(dist * 100 / len(response)) for dist in distances]
+    
+    df_dis = pd.DataFrame(distances)
+    df_dis.to_excel('dis.xlsx', index=False)
+    
     print("Inter-chip Hamming distance is:", inter_hd)
     print(distances)
     print(np.std(distances))
@@ -198,7 +209,7 @@ def challenge_response():
         responses=converts_decimal((count-1),response,responses)
         
         avg_response = np.mean(responses)
-        print("avger_response:",avg_response)
+        # print("avger_response:",avg_response)
 
     responses_binary=np.array(responses_binary)#list of all possible responses in binary format
     responses=np.array(responses)#list of all possible responses in decimal format
@@ -231,7 +242,7 @@ print("Randomness Factor:", correlation_numpy)
 plt.figure(figsize=(10, 10))
 
 #plotting inter chip hamming distance
-#plt.subplot(2, 2, 2)
+#plt.subplot(2, 2, 2) '''
 plt.xlim(0, 100)
 ticks = np.arange(0, 100, 10)
 labels = [f'{tick} ' for tick in ticks]
@@ -243,6 +254,7 @@ plt.xlabel('Hamming Distance',fontweight='bold',fontsize=14)
 plt.ylabel('Frequency',fontweight='bold',fontsize=14)
 plt.legend(fontsize=20)
 
+'''
 #plotting the relation between challenge and response
 #plt.subplot(2, 2, 3)
 plt.xlim(0, 16)
@@ -260,17 +272,17 @@ plt.legend(fontsize=20)
 '''
 # plotting occurance of each response in one puf instance
 # plt.subplot(2, 2, 1)
-plt.xlim(0, 65536)
-ticks = np.arange(0, 65536,13107)
-labels = [f'{tick} ' for tick in ticks]
-plt.xticks(ticks, labels,weight='bold',fontsize=12)
-plt.yticks(weight='bold',fontsize=12)
-plt.hist(responses,bins=32,edgecolor='k', alpha=0.7,label='LRS')
-plt.axhline(y=2048, color='r', linestyle='--', label='Ideal')
-plt.title('Uniqueness of responses',fontweight='bold',fontsize=16 )
-plt.xlabel('Responses',fontweight='bold',fontsize=14)
-plt.ylabel('Frequency',fontweight='bold',fontsize=14)
-plt.legend(fontsize=20)
+# plt.xlim(0, 65536)
+# ticks = np.arange(0, 65536,13107)
+# labels = [f'{tick} ' for tick in ticks]
+# plt.xticks(ticks, labels,weight='bold',fontsize=12)
+# plt.yticks(weight='bold',fontsize=12)
+# plt.hist(responses,bins=32,edgecolor='k', alpha=0.7,label='LRS')
+# plt.axhline(y=2048, color='r', linestyle='--', label='Ideal')
+# plt.title('Uniqueness of responses',fontweight='bold',fontsize=16 )
+# plt.xlabel('Responses',fontweight='bold',fontsize=14)
+# plt.ylabel('Frequency',fontweight='bold',fontsize=14)
+# plt.legend(fontsize=20)
 
 '''
 
