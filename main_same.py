@@ -197,6 +197,6 @@ if __name__ == "__main__":
     challenge_size= 16
     
     main_LRS(challenge_size)
-    # main_HRS(challenge_size)
+    main_HRS(challenge_size)
     
     
