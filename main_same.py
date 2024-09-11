@@ -102,7 +102,7 @@ def main_LRS(challenge_size):
     plt.ylabel('Frequency',fontweight='bold',fontsize=14)
     plt.bar_label(bars,fontsize=6)
     
-    msq_error  = np.sqrt(np.sum((4096 - counts)**2))
+    msq_error  = np.sqrt(np.sum((4096 - counts)**2)/len(counts))
     
     plt.text(0.4, 0.4, f'metric  = {msq_error :.2f}', 
              horizontalalignment='left', verticalalignment='top', 
@@ -176,7 +176,7 @@ def main_HRS(challenge_size):
     plt.ylabel('Frequency',fontweight='bold',fontsize=14)
     plt.bar_label(bars,fontsize=6)
     
-    msq_error  = np.sqrt(np.sum((4096 - counts)**2))
+    msq_error  = np.sqrt(np.sum((4096 - counts)**2)/len(counts))
     
     plt.text(0.4, 0.4, f'metric  = {msq_error :.2f}', 
              horizontalalignment='left', verticalalignment='top', 

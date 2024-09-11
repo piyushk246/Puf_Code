@@ -62,7 +62,7 @@ def main_HRS(challenge_size):
     plt.ylabel('Frequency',fontweight='bold',fontsize=14)
     plt.bar_label(bars,fontsize=6)
     
-    msq_error  = np.sqrt(np.sum((4096 - counts)**2))
+    msq_error  = np.sqrt(np.sum((4096 - counts)**2)/len(counts))
     
     plt.text(0.4, 0.4, f'metric  = {msq_error :.2f}', 
              horizontalalignment='left', verticalalignment='top', 
@@ -124,14 +124,14 @@ def main_LRS(challenge_size):
     
     # plt.hist(responses1,bins=16,edgecolor='k', alpha=0.7,label='LRS')
     
-    counts, bins, bars = plt.hist(responses1, bins=16, alpha=0.6, edgecolor='black',label='LRS')
-    plt.axhline(y=4096, color='r', linestyle='--', label='Ideal(4096)')
+    counts, bins, bars = plt.hist(responses1, bins=32, alpha=0.6, edgecolor='black',label='LRS')
+    plt.axhline(y=2048, color='r', linestyle='--', label='Ideal(4096)')
     plt.title('Uniqueness of responses',fontweight='bold',fontsize=16 )
     plt.xlabel('Responses',fontweight='bold',fontsize=14)
     plt.ylabel('Frequency',fontweight='bold',fontsize=14)
     plt.bar_label(bars,fontsize=6)
-    
-    msq_error  = np.sqrt(np.sum((4096 - counts)**2))        #root mean square error (RMSE)
+    print(len(counts))
+    msq_error  = np.sqrt(np.sum((4096 - counts)**2)/len(counts))        #root mean square error (RMSE)
     std_dev = np.std(responses1)        # Standard Deviation
 
     
@@ -171,5 +171,5 @@ def main_LRS(challenge_size):
 if __name__ == "__main__":
     challenge_size= 16
     
-    # main_LRS(challenge_size)
-    main_HRS(challenge_size)
+    main_LRS(challenge_size)
+    # main_HRS(challenge_size)
