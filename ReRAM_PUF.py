@@ -215,7 +215,8 @@ def challenge_response():
     responses=np.array(responses)#list of all possible responses in decimal format
     crp = pd.DataFrame({'Challenges': challenges_binary, 'ResponsesBinary': responses_binary.tolist(),'ChallengeDecimal':challenges,'ResponseDecimal': responses})
     # print(crp)
-    crp.to_csv('output_16bit(LRS).csv', index=False)
+    # crp.to_csv('output_16bit(LRS).csv', index=False)
+    crp.to_excel('output_16bit(LRS).xlsx', index=False)
     challenges=np.array(challenges)#list of all possible challenge
     return(challenges,responses)
 

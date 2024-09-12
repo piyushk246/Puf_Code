@@ -4,19 +4,6 @@ import matplotlib.pyplot as plt
 import ast
 
 class HammingDistanceCalculator:        
-    # def __init__(self, csv_path, usecols=None, skiprows=1):
-    #     self.csv_path = csv_path
-    #     self.usecols = usecols if usecols is not None else [1]  
-    #     self.skiprows = skiprows if skiprows is not None else []
-    #     self.data = None
-    #     # Read the CSV file and extract data from the second column (index 1)
-    #     df = pd.read_csv(self.csv_path, usecols=self.usecols, skiprows=self.skiprows)
-    #     # self.data = df.to_numpy().flatten()
-    #     # self.data = df.to_numpy()
-    #     self.data = df.applymap(lambda x: ast.literal_eval(x) if isinstance(x, str) else x).to_numpy()
-    #     # print(len(self.data[0][0]))
-    #     # print(self.data[0][0])
-    #     print(self.data)
 
     def __init__(self, csv_path, usecols=None, skiprows=1):
         self.csv_path = csv_path
