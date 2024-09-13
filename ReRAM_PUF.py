@@ -145,8 +145,8 @@ def inter_chip(pufs, challenge_row, challenge_col, res_f, row, col, ref_res, col
 
     responses = np.asarray(responses)
     
-    # df = pd.DataFrame(responses)
-    # df.to_excel('hamming_distance.xlsx', index=False)
+    df = pd.DataFrame(responses)
+    df.to_excel('hamming_distance_responses.xlsx', index=False)
     
     for i in range(pufs - 1):
         for j in range(i + 1, pufs):
@@ -280,28 +280,28 @@ plt.legend(fontsize=20)
 # labels = [f'{tick} ' for tick in ticks]
 # plt.xticks(ticks, labels,weight='bold',fontsize=12)
 
-plt.yticks(weight='bold',fontsize=12)
-counts, bins, bars = plt.hist(responses,bins=32,edgecolor='k', alpha=0.7,label='LRS')
-plt.axhline(y=2048, color='r', linestyle='--', label='Ideal')
-plt.title('Uniqueness of responses',fontweight='bold',fontsize=16 )
-plt.xlabel('Responses',fontweight='bold',fontsize=14)
-plt.ylabel('Frequency',fontweight='bold',fontsize=14)
-plt.bar_label(bars,fontsize=6)
-print(len(counts))
-msq_error  = np.sqrt(np.sum((2048 - counts)**2)/len(counts))        #root mean square error (RMSE)
-std_dev = np.std(responses)  
+# plt.yticks(weight='bold',fontsize=12)
+# counts, bins, bars = plt.hist(responses,bins=32,edgecolor='k', alpha=0.7,label='LRS')
+# plt.axhline(y=2048, color='r', linestyle='--', label='Ideal')
+# plt.title('Uniqueness of responses',fontweight='bold',fontsize=16 )
+# plt.xlabel('Responses',fontweight='bold',fontsize=14)
+# plt.ylabel('Frequency',fontweight='bold',fontsize=14)
+# plt.bar_label(bars,fontsize=6)
+# print(len(counts))
+# msq_error  = np.sqrt(np.sum((2048 - counts)**2)/len(counts))        #root mean square error (RMSE)
+# std_dev = np.std(responses)  
 
-plt.text(0.4, 0.4, f'metric  = {msq_error :.2f}', 
-     horizontalalignment='left', verticalalignment='top', 
-     transform=plt.gca().transAxes, fontsize=8, color='k', weight='bold', 
-     bbox=dict(facecolor='white', edgecolor='none', pad=3))
+# plt.text(0.4, 0.4, f'metric  = {msq_error :.2f}', 
+#      horizontalalignment='left', verticalalignment='top', 
+#      transform=plt.gca().transAxes, fontsize=8, color='k', weight='bold', 
+#      bbox=dict(facecolor='white', edgecolor='none', pad=3))
  
-# Display the legend
-plt.legend(loc='lower left', facecolor='white', edgecolor='black', fontsize=10)
-# plt.legend(fontsize=10)
+# # Display the legend
+# plt.legend(loc='lower left', facecolor='white', edgecolor='black', fontsize=10)
+# # plt.legend(fontsize=10)
 
-# plt.tight_layout()
-plt.savefig(f'./results/c16r16_hrs_metric(LRS).png',format = 'PNG' , dpi = 300)
+# # plt.tight_layout()
+# plt.savefig(f'./results/c16r16_hrs_metric(LRS).png',format = 'PNG' , dpi = 300)
 # plt.show()
 
 '''

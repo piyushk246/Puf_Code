@@ -1,81 +1,73 @@
+import numpy as np
 import pandas as pd
-import ast
-from itertools import combinations
 import matplotlib.pyplot as plt
-from concurrent.futures import ThreadPoolExecutor, as_completed
-from multiprocessing import Pool
-import os
 
-def hamming_distance(resp1, resp2):
-    return sum(el1 != el2 for el1, el2 in zip(resp1, resp2))
-
-def read_crp(file_path):
-    crp = {}
-    df = pd.read_excel(file_path)
-    for _, row in df.iterrows():
-        challenge = ast.literal_eval(row['Challenges'])  # Convert challenge string to list
-        response_binary = ast.literal_eval(row['ResponsesBinary'])  # Convert response string to list
-        
-        challenge = tuple(challenge)  # Convert challenge to a tuple so it can be used as a dict key
-        
-        if challenge not in crp:
-            crp[challenge] = []
-        crp[challenge].append(response_binary)
-    return crp
-
-def compute_distances(challenges_pair):
-    challenge1, challenge2 = challenges_pair
+def inter_chip(pufs, binary_responses):
     distances = []
-    responses1 = crp[challenge1]
-    responses2 = crp[challenge2]
-    for resp1 in responses1:
-        for resp2 in responses2:
-            distance = hamming_distance(resp1, resp2)
-            distances.append(distance)
+    s = 0
+
+    # Ensure the binary_responses are in a NumPy array format
+    responses = np.asarray(binary_responses)
+
+    # Calculate Hamming distances between all pairs of responses
+    for i in range(pufs - 1):
+        for j in range(i + 1, pufs):
+            dist = hamming_distance(responses[i], responses[j])
+            s += dist
+            distances.append(dist)
+
+    # Calculate inter-chip Hamming distance (in percentage form)
+    inter_hd = (2 * s * 100) / (pufs * (pufs - 1) * len(responses[0]))
+    
+    # Normalize distances to percentage form
+    distances = [(dist * 100 / len(responses[0])) for dist in distances]
+
+    # Save distances to an Excel file
+    df_dis = pd.DataFrame(distances)
+    df_dis.to_excel('dis.xlsx', index=False)
+    
+    # Print statistics
+    print("Inter-chip Hamming distance is:", inter_hd)
+    print("Distances:", distances)
+    print("Standard deviation:", np.std(distances))
+    print("Total pairs:", len(distances))
+    print("Minimum distance:", min(distances))
+    print("Maximum distance:", max(distances))
+    
+    # Plotting the histogram
+    plt.figure(figsize=(8, 6))  # Specify figure size
+    # plt.xlim(0, 30)  # Set limits for the x-axis
+    plt.yticks(weight='bold', fontsize=12)  # Customize y-axis ticks
+
+    # Plot histogram for Hamming distances
+    plt.hist(distances, bins=16, edgecolor='k', alpha=0.7, label='HRS')
+
+    # Customize the title and labels
+    plt.title('Hamming Distance Time Multiplexing', fontweight='bold', fontsize=12)
+    plt.xlabel('Hamming Distance', fontweight='bold', fontsize=14)
+    plt.ylabel('Frequency', fontweight='bold', fontsize=14)
+
+    # Add legend
+    plt.legend(fontsize=14)
+
+    # Uncomment the following line if you want to save the plot
+    # plt.savefig('./Hamming_Distance_Plot.png', format='PNG', dpi=300)
+
+    # Show the plot
+    plt.show()
+    
     return distances
 
-def calculate_inter_hamming_threading(crp):
-    inter_distances = []
-    challenges = list(crp.keys())
-    challenge_pairs = combinations(challenges, 2)
-    
-    with ThreadPoolExecutor(max_workers=os.cpu_count()) as executor:
-        future_to_pair = {executor.submit(compute_distances, pair): pair for pair in challenge_pairs}
-        
-        for future in as_completed(future_to_pair):
-            result = future.result()
-            inter_distances.extend(result)
-        
-    return inter_distances
+def hamming_distance(response1, response2):
+    # Compute the Hamming distance between two binary responses
+    return sum(r1 != r2 for r1, r2 in zip(response1, response2))
 
-def calculate_inter_hamming_multiprocessing(crp):
-    inter_distances = []
-    challenges = list(crp.keys())
-    challenge_pairs = list(combinations(challenges, 2))
-    
-    with Pool(processes=os.cpu_count()) as pool:
-        results = pool.map(compute_distances, challenge_pairs)
-        
-    for result in results:
-        inter_distances.extend(result)
-    
-    return inter_distances
+# Example usage:
+binary_responses = [
+    [0, 1, 0, 1, 1, 0, 1, 0],
+    [1, 0, 1, 0, 0, 1, 0, 1],
+    [0, 1, 1, 0, 1, 1, 0, 0],
+    [1, 1, 0, 0, 0, 1, 1, 1]
+]
 
-def plot_histogram(distances, num_bits):
-    plt.hist(distances, bins=num_bits, edgecolor='black', alpha=0.7)
-    plt.title('Histogram of Inter-Hamming Distances')
-    plt.xlabel('Hamming Distance')
-    plt.ylabel('Frequency')
-    plt.grid(True)
-    plt.savefig("inter.png")
-    plt.show()
-
-# Example Usage
-file_path = './output_16bit(LRS).xlsx'  # Change extension if needed
-crp = read_crp(file_path)
-
-# Calculate inter-Hamming distances using multiprocessing
-inter_hd_distances = calculate_inter_hamming_multiprocessing(crp)
-
-# Plot histogram (assuming 16-bit responses)
-plot_histogram(inter_hd_distances, num_bits=16)
+distances = inter_chip(pufs=len(binary_responses), binary_responses=binary_responses)
