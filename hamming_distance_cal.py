@@ -21,10 +21,10 @@ class HammingDistanceCalculator:
     
     def hd_calculator(self):
         ham_dis = []
-        for i in range(1,len(self.data)):
-            hamming_dist =self.hamming_distance(self.data[i-1],self.data[i])
-            # print(i,"Hamming Distance:", hamming_dist)
-            ham_dis.append(hamming_dist)
+        for i in range(len(self.data)):
+            for j in range(i+1, len(self.data)):
+                hamming_dist = self.hamming_distance(self.data[i], self.data[j])
+                ham_dis.append(hamming_dist)  # Append inside the loop
         return ham_dis
             
             
@@ -32,27 +32,17 @@ class HammingDistanceCalculator:
         pass
         
 if __name__ == "__main__":
-    
     # Assuming the second column in the CSV (index 1)
     # hd_calculator = HammingDistanceCalculator(r'./results/diff(HRS)_ch16_rsp_32.csv', usecols=[1])
     # hd_calculator = HammingDistanceCalculator(r'./results/same(HRS)_ch16_rsp_32.csv', usecols=[1])
     hd_calculator = HammingDistanceCalculator(r'./unused/output.csv', usecols=[2])
-    # response1 = [1, 0, 1, 1]
-    # response2 = [0, 1, 1, 0]
-    # hamming_dist = hd_calculator.hamming_distance(response1, response2)
-    # print("Hamming Distance:", hamming_dist)
-    
     hd = hd_calculator.hd_calculator()
     # print(hd)
     
-    plt.figure()
-    #plotting inter chip hamming distance
-    #plt.subplot(2, 2, 2)
-    plt.xlim(0, 30)
-    # ticks = np.arange(0, 100, 10)
-    # labels = [f'{tick} ' for tick in ticks]
-    # plt.xticks(ticks, labels,weight='bold',fontsize=12)
+
     
+    plt.figure
+    plt.xlim(0, 30)
     plt.yticks(weight='bold',fontsize=12)
     plt.hist(hd, bins=16, edgecolor='k', alpha=0.7,label='HRS')
     # plt.title('Hamming Distance hardware multiplexing ',fontweight='bold',fontsize=12)
@@ -62,7 +52,7 @@ if __name__ == "__main__":
     plt.legend(fontsize=14)
     # plt.savefig('./results/Hamming_Distance_diff(LRS).png',format = 'PNG' , dpi = 300)
     # plt.savefig('./Hamming_Distance_diff(HRS).png',format = 'PNG' , dpi = 300)
-    plt.savefig('./HD_test(HRS).png',format = 'PNG' , dpi = 300)
+    # plt.savefig('./HD_test(HRS).png',format = 'PNG' , dpi = 300)
     plt.show()
 
 

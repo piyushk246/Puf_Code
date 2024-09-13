@@ -93,16 +93,18 @@ def main_LRS(challenge_size):
     # plt.savefig('./results/sam16_c16r32_hrs(LRS).png',format = 'PNG' , dpi = 300)
     # plt.show()
 
+    ideal = 2048
+    bin = 32
                 
                 # ploting with the matric
-    counts, bins, bars = plt.hist(responses1, bins=16, alpha=0.6, edgecolor='black',label='LRS')
-    plt.axhline(y=4096, color='r', linestyle='--', label='Ideal(4096)')
+    counts, bins, bars = plt.hist(responses1, bins=bin, alpha=0.6, edgecolor='black',label='LRS')
+    plt.axhline(y=ideal, color='r', linestyle='--', label='Ideal({ideal})')
     plt.title('Uniqueness of responses',fontweight='bold',fontsize=16 )
     plt.xlabel('Responses',fontweight='bold',fontsize=14)
     plt.ylabel('Frequency',fontweight='bold',fontsize=14)
     plt.bar_label(bars,fontsize=6)
     
-    msq_error  = np.sqrt(np.sum((4096 - counts)**2)/len(counts))
+    msq_error  = np.sqrt(np.sum((ideal - counts)**2)/len(counts))
     
     plt.text(0.4, 0.4, f'metric  = {msq_error :.2f}', 
          horizontalalignment='left', verticalalignment='top', 
@@ -114,7 +116,7 @@ def main_LRS(challenge_size):
     # plt.legend(fontsize=10)
     
     plt.tight_layout()
-    plt.savefig('./results/sam16_c16r32_hrs_metric(LRS).png',format = 'PNG' , dpi = 300)
+    plt.savefig(f'./results/sam{bin}_c16r32_hrs_metric(LRS).png',format = 'PNG' , dpi = 300)
     plt.show()
 
 def main_HRS(challenge_size):
@@ -169,15 +171,17 @@ def main_HRS(challenge_size):
     # plt.savefig('./results/sam16_c16r32_hrs(HRS).png',format = 'PNG' , dpi = 300)
     # plt.show()
 
+    ideal = 2048
+    bin = 32
             #PLOTING WITH THE MATRIC
-    counts, bins, bars = plt.hist(responses1, bins=16, alpha=0.6, edgecolor='black',label='HRS')
-    plt.axhline(y=4096, color='r', linestyle='--', label='Ideal(4096)')
+    counts, bins, bars = plt.hist(responses1, bins=bin, alpha=0.6, edgecolor='black',label='HRS')
+    plt.axhline(y=ideal, color='r', linestyle='--', label=f'Ideal({ideal})')
     plt.title('Uniqueness of responses',fontweight='bold',fontsize=16 )
     plt.xlabel('Responses',fontweight='bold',fontsize=14)
     plt.ylabel('Frequency',fontweight='bold',fontsize=14)
     plt.bar_label(bars,fontsize=6)
     
-    msq_error  = np.sqrt(np.sum((4096 - counts)**2)/len(counts))
+    msq_error  = np.sqrt(np.sum((ideal - counts)**2)/len(counts))
     
     plt.text(0.4, 0.4, f'metric  = {msq_error :.2f}', 
          horizontalalignment='left', verticalalignment='top', 
@@ -189,7 +193,7 @@ def main_HRS(challenge_size):
     # plt.legend(fontsize=10)
     
     plt.tight_layout()
-    plt.savefig('./results/sam16_c16r32_hrs_metric(HRS).png',format = 'PNG' , dpi = 300)
+    plt.savefig(f'./results/sam{bin}_c16r32_hrs_metric(HRS).png',format = 'PNG' , dpi = 300)
     plt.show() 
     
     

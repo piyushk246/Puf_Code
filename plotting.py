@@ -1,14 +1,18 @@
 import matplotlib.pyplot as plt
 import numpy as np
 
+
 class Plot:
-    def __init__(self, challenges, responses, challenge_size, col_page):
-        self.challenges = challenges
-        self.responses = responses
-        self.col_page = col_page
-        self.challenges_size = challenge_size
-        self.y_ref = (2**challenge_size) / (2*col_page)
-        # print(self.y_ref)
+    # def __init__(self, challenges, responses, challenge_size, col_page):
+    #     self.challenges = challenges
+    #     self.responses = responses
+    #     self.col_page = col_page
+    #     self.challenges_size = challenge_size
+    #     self.y_ref = (2**challenge_size) / (2*col_page)
+    #     # print(self.y_ref)
+        
+    def __init__(self):
+        pass
 
     def CRP(self):
         plt.figure(figsize=(10, 6))  # Adjust the size of the figure if needed
@@ -42,8 +46,25 @@ class Plot:
         # Display the plot
         plt.show()
 
+    def inter_hamming(self, hd_list,bin):
+        plt.figure
+        plt.xlim(0, 30)
+        plt.yticks(weight='bold',fontsize=12)
+        plt.hist(hd_list, bins=bin, edgecolor='k', alpha=0.7,label='HRS')
+        # plt.title('Hamming Distance hardware multiplexing ',fontweight='bold',fontsize=12)
+        plt.title('Hamming Distance Time multiplexing ',fontweight='bold',fontsize=12)
+        plt.xlabel('Hamming Distance',fontweight='bold',fontsize=14)
+        plt.ylabel('Frequency',fontweight='bold',fontsize=14)
+        plt.legend(fontsize=14)
+        # plt.savefig('./results/Hamming_Distance_diff(LRS).png',format = 'PNG' , dpi = 300)
+        # plt.savefig('./Hamming_Distance_diff(HRS).png',format = 'PNG' , dpi = 300)
+        # plt.savefig('./HD_test(HRS).png',format = 'PNG' , dpi = 300)
+        plt.show()
+        
+        
 # Example usage:
-challenges = np.random.randint(0, 2, size=(10, 8))  # Example challenge data
-responses = np.random.randint(0, 65536, size=10000)  # Example response data
-plotter = Plot(challenges, responses, 8, 8)  # Example values for challenges_size and col_page
-# plotter.CRP()
+# challenges = np.random.randint(0, 2, size=(10, 8))  # Example challenge data
+# responses = np.random.randint(0, 65536, size=10000)  # Example response data
+# plotter = Plot(challenges, responses, 8, 8)  # Example values for challenges_size and col_page
+
+# # plotter.CRP()
