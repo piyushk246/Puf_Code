@@ -89,10 +89,10 @@ class HammingDistanceCalculator:
         plt.legend(fontsize=14)
 
         # Uncomment the following line if you want to save the plot
-        # plt.savefig('./HD_diff(LRS).png', format='PNG', dpi=300)
-        # plt.savefig('./HD_diff(HRS).png', format='PNG', dpi=300)
-        plt.savefig('./HD_same(LRS).png', format='PNG', dpi=300)
-        # plt.savefig('./HD_same(HRS).png', format='PNG', dpi=300)
+        # plt.savefig('./results/HD/HD_diff(LRS).png', format='PNG', dpi=300)
+        # plt.savefig('./results/HD/HD_diff(HRS).png', format='PNG', dpi=300)
+        plt.savefig('./results/HD/HD_same(LRS).png', format='PNG', dpi=300)
+        # plt.savefig('./results/HD/HD_same(HRS).png', format='PNG', dpi=300)
         plt.tight_layout()
         # Show the plot
         plt.show()
