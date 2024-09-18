@@ -75,13 +75,15 @@ class HammingDistanceCalculator:
         # plt.xlim(0, 30)  # Set limits for the x-axis
         plt.yticks(weight='bold', fontsize=12)  # Customize y-axis ticks
 
-        # Plot histogram for Hamming distances
-        plt.hist(distances, bins=64, edgecolor='k', alpha=0.7, label='HRS')
+
 
         # Customize the title and labels
         plt.title('Hamming Distance Time Multiplexing', fontweight='bold', fontsize=12)
         plt.xlabel('Hamming Distance', fontweight='bold', fontsize=14)
         plt.ylabel('Frequency', fontweight='bold', fontsize=14)
+
+        # Plot histogram for Hamming distances
+        plt.hist(distances, bins=64, edgecolor='k', alpha=0.7, label='LRS')
 
         # Add legend
         plt.legend(fontsize=14)
