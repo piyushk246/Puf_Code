@@ -13,7 +13,7 @@ import pandas as pd
 #collecting the hrs values
 #col E has LRS values and col B has HRS values
 # df = pd.read_excel(r'fig5(b).xlsx', usecols='B', skiprows=[1,2])
-df = pd.read_excel(r'C:\Users\Piyush\Desktop\sem3\PUF\Code\fig5(b).xlsx', usecols='B', skiprows=[1,2])
+df = pd.read_excel(r'C:\Users\Piyush\Desktop\sem3\PUF\Code\fig5(b).xlsx', usecols='E', skiprows=[1,2])
 
 res_f = df.to_numpy().flatten()
 
@@ -23,8 +23,8 @@ res_f = df.to_numpy().flatten()
 # print(res_f)
 
 #ref_res = np.median(res_f) #finding the reference resistance
-ref_res=8.1814  #HRS
-# ref_res=4.43 #LRs
+# ref_res=8.1814  #HRS
+ref_res=4.43 #LRs
 #appending the hrs values to have a larger set of data
 for i in range(10):
     res_f=np.append(res_f,res_f)
@@ -218,7 +218,7 @@ def challenge_response():
     crp = pd.DataFrame({'Challenges': challenges_binary, 'ResponsesBinary': responses_binary.tolist(),'ChallengeDecimal':challenges,'ResponseDecimal': responses})
     # print(crp)
     # crp.to_csv('output_16bit(LRS).csv', index=False)
-    crp.to_excel('output_16bit(LRS).xlsx', index=False)
+    # crp.to_excel('output_16bit(LRS).xlsx', index=False)
     challenges=np.array(challenges)#list of all possible challenge
     return(challenges,responses)
 
@@ -282,9 +282,9 @@ plt.legend(fontsize=20)
 # plt.xticks(ticks, labels,weight='bold',fontsize=12)
 
 bin = 16
-ideal = 4096
+ideal = (2**16)/bin
 # plt.yticks(weight='bold',fontsize=12)
-counts, bins, bars = plt.hist(responses,bins=bin,edgecolor='k', alpha=0.7,label='HRS')
+counts, bins, bars = plt.hist(responses,bins=bin,edgecolor='k', alpha=0.7,label='LRS')
 plt.axhline(y=ideal, color='r', linestyle='--', label='Ideal')
 plt.title(f'Uniqueness of responses BIN = {bin}',fontweight='bold',fontsize=16 )
 plt.xlabel('Responses',fontweight='bold',fontsize=14)
@@ -304,7 +304,7 @@ plt.legend(loc='lower left', facecolor='white', edgecolor='black', fontsize=10)
 # plt.legend(fontsize=10)
 
 # plt.tight_layout()
-plt.savefig(f'./results/UniqueResp/one16_c16r16_hrs_metric(HRS).png',format = 'PNG' , dpi = 300)
+plt.savefig(f'./results/UniqueResp/one{bin}_c16r16_hrs_metric(LRS).png',format = 'PNG' , dpi = 300)
 # plt.show()
 
 '''
