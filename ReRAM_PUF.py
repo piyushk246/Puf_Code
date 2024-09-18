@@ -282,7 +282,7 @@ plt.legend(fontsize=20)
 # plt.xticks(ticks, labels,weight='bold',fontsize=12)
 
 bin = 16
-ideal = 4096
+ideal = (2**16)/bin
 # plt.yticks(weight='bold',fontsize=12)
 counts, bins, bars = plt.hist(responses,bins=bin,edgecolor='k', alpha=0.7,label='HRS')
 plt.axhline(y=ideal, color='r', linestyle='--', label='Ideal')
@@ -304,7 +304,7 @@ plt.legend(loc='lower left', facecolor='white', edgecolor='black', fontsize=10)
 # plt.legend(fontsize=10)
 
 # plt.tight_layout()
-plt.savefig(f'./results/UniqueResp/one16_c16r16_hrs_metric(HRS).png',format = 'PNG' , dpi = 300)
+plt.savefig(f'./results/UniqueResp/one{bin}_c16r16_hrs_metric(HRS).png',format = 'PNG' , dpi = 300)
 # plt.show()
 
 '''
