@@ -40,7 +40,7 @@ def main_HRS(challenge_size):
     # def challenge_response_diff(self, array1, array2, ref_res, col_page, challenge, select_line, count):
     # challenges1, responses1 = Puf.challenge_response( array[0], ref_res,   64,    challenge,    10,      16,              1 )
     file_name = "./results/diff(HRS)_ch16_rsp"
-    challenges2, responses1 = Puf.challenge_response_diff( array[0], array[1], ref_res,   64,    challenge,    10,      16,file_name)
+    challenges1, responses1 = Puf.challenge_response_diff( array[0], array[1], ref_res,   64,    challenge,    10,      16,file_name)
 
 
                     # ploting without the matric  
@@ -57,6 +57,7 @@ def main_HRS(challenge_size):
                     #ploting with the matric
     ideal = 2048
     bin = 32
+    plt.figure(0)
     counts, bins, bars = plt.hist(responses1, bins=bin, alpha=0.6, edgecolor='black',label='HRS')
     plt.axhline(y=ideal, color='r', linestyle='--', label=f'Ideal({ideal})')
     plt.title('Uniqueness of responses',fontweight='bold',fontsize=16 )
@@ -78,6 +79,25 @@ def main_HRS(challenge_size):
     
     plt.tight_layout()
     plt.savefig(f'./results/diff{bin}_c16r32_hrs_metric(HRS).png',format = 'PNG' , dpi = 300)
+    
+    
+    
+    
+    plt.figure(1)
+    # ticks = np.arange(0, 16, 1)
+    # labels = [f'{tick} ' for tick in ticks]
+    # plt.xticks(ticks, labels,weight='bold')
+    # plt.ylim(0, 16)
+    # labels1 = [f'{tick} ' for tick in ticks]
+    # plt.yticks(ticks, labels1,weight='bold')
+    plt.plot(challenges1,responses1,'o',markersize=0.4,color='#F81506',label='HRS')
+    plt.title('Relation between challenge and response',fontweight='bold',fontsize=16)
+    plt.xlabel('Challenge',fontweight='bold',fontsize=14)
+    plt.ylabel('Response',fontweight='bold',fontsize=14)
+    plt.legend(fontsize=12)
+    plt.tight_layout()
+    plt.savefig('./results/ChaRes/diff_HRS_ch_rsp.png',format = 'PNG' , dpi = 300)
+    
     plt.show()  
     
 def main_LRS(challenge_size):
@@ -123,13 +143,14 @@ def main_LRS(challenge_size):
     # def challenge_response_diff(self, array1, array2, ref_res, col_page, challenge, select_line, count):
     # challenges1, responses1 = Puf.challenge_response( array[0], ref_res,   64,    challenge,    10,      16,              1 )
     file_name = "./results/diff(LRS)_ch16_rsp"
-    challenges2, responses1 = Puf.challenge_response_diff( array[0], array[1], ref_res,   64,    challenge,    10,      16,file_name)
+    challenges1, responses1 = Puf.challenge_response_diff( array[0], array[1], ref_res,   64,    challenge,    10,      16,file_name)
     
     
     # plt.hist(responses1,bins=16,edgecolor='k', alpha=0.7,label='LRS')
     
     ideal = 2048
     bin= 32
+    plt.figure(0)
     counts, bins, bars = plt.hist(responses1, bins=bin, alpha=0.6, edgecolor='black',label='LRS')
     plt.axhline(y=ideal, color='r', linestyle='--', label=f'Ideal({ideal})')
     plt.title('Uniqueness of responses',fontweight='bold',fontsize=16 )
@@ -154,9 +175,7 @@ def main_LRS(challenge_size):
     
     plt.tight_layout()
     plt.savefig(f'./results/diff{bin}_c16r32_hrs_metric(LRS).png',format = 'PNG' , dpi = 300)
-    plt.show()
     
-
     # sum_deviation = sqrt(np.sum((1024 - counts)**2))
     
 
@@ -169,6 +188,27 @@ def main_LRS(challenge_size):
     
     # print((4096-counts))
     
+    
+    
+    plt.figure(1)
+    # ticks = np.arange(0, 16, 1)
+    # labels = [f'{tick} ' for tick in ticks]
+    # plt.xticks(ticks, labels,weight='bold')
+    # plt.ylim(0, 16)
+    # labels1 = [f'{tick} ' for tick in ticks]
+    # plt.yticks(ticks, labels1,weight='bold')
+    plt.plot(challenges1,responses1,'o',markersize=0.4,color='blue',label='LRS')
+    plt.title('Relation between challenge and response',fontweight='bold',fontsize=16)
+    plt.xlabel('Challenge',fontweight='bold',fontsize=14)
+    plt.ylabel('Response',fontweight='bold',fontsize=14)
+    plt.legend(fontsize=12)
+    plt.tight_layout()
+    plt.savefig('./results/ChaRes/diff_LRS_ch_rsp.png',format = 'PNG' , dpi = 300)
+    
+    plt.show()
+    
+
+
     ####call the ploting function for the plot
      
     
