@@ -83,15 +83,15 @@ class HammingDistanceCalculator:
         plt.ylabel('Frequency', fontweight='bold', fontsize=14)
 
         # Plot histogram for Hamming distances
-        plt.hist(distances, bins=64, edgecolor='k', alpha=0.7, label='LRS')
+        plt.hist(distances, bins=64, edgecolor='k', alpha=0.7, label='HRS')
 
         # Add legend
         plt.legend(fontsize=14)
 
         # Uncomment the following line if you want to save the plot
         # plt.savefig('./results/HD/HD_diff(LRS).png', format='PNG', dpi=300)
-        # plt.savefig('./results/HD/HD_diff(HRS).png', format='PNG', dpi=300)
-        plt.savefig('./results/HD/HD_same(LRS).png', format='PNG', dpi=300)
+        plt.savefig('./results/HD/HD_diff(HRS).png', format='PNG', dpi=300)
+        # plt.savefig('./results/HD/HD_same(LRS).png', format='PNG', dpi=300)
         # plt.savefig('./results/HD/HD_same(HRS).png', format='PNG', dpi=300)
         plt.tight_layout()
         # Show the plot
@@ -105,10 +105,9 @@ class HammingDistanceCalculator:
 if __name__ == "__main__":
     # Assuming the second column in the CSV (index 1)
     # hd_calculator = HammingDistanceCalculator(r'./results/same(HRS)_ch16_rsp_32.csv', usecols=[1])
-    hd_calculator = HammingDistanceCalculator(r'./results/same(LRS)_ch16_rsp_32.csv', usecols=[1])
+    # hd_calculator = HammingDistanceCalculator(r'./results/same(LRS)_ch16_rsp_32.csv', usecols=[1])
     # hd_calculator = HammingDistanceCalculator(r'./results/diff(LRS)_ch16_rsp_32.csv', usecols=[1])
-    # hd_calculator = HammingDistanceCalculator(r'./results/diff(HRS)_ch16_rsp_32.csv', usecols=[1])
-    # hd_calculator = HammingDistanceCalculator(r'./unused/output.csv', usecols=[1])
+    hd_calculator = HammingDistanceCalculator(r'./results/diff(HRS)_ch16_rsp_32.csv', usecols=[1])
     
     hd_calculator.inter_chip()
     # print(hd)
