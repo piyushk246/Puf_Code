@@ -171,9 +171,13 @@ def main_HRS(challenge_size):
     # plt.savefig('./results/sam16_c16r32_hrs(HRS).png',format = 'PNG' , dpi = 300)
     # plt.show()
 
+    cr= Plot()
+    cr.C_vs_R(challenges1, responses1)
+
     ideal = 2048
     bin = 32
             #PLOTING WITH THE MATRIC
+    plt.figure(1)
     counts, bins, bars = plt.hist(responses1, bins=bin, alpha=0.6, edgecolor='black',label='HRS')
     plt.axhline(y=ideal, color='r', linestyle='--', label=f'Ideal({ideal})')
     plt.title('Uniqueness of responses',fontweight='bold',fontsize=16 )
@@ -193,14 +197,14 @@ def main_HRS(challenge_size):
     # plt.legend(fontsize=10)
     
     plt.tight_layout()
-    plt.savefig(f'./results/sam{bin}_c16r32_hrs_metric(HRS).png',format = 'PNG' , dpi = 300)
-    plt.show() 
+    # plt.savefig(f'./results/sam{bin}_c16r32_hrs_metric(HRS).png',format = 'PNG' , dpi = 300)
+    # plt.show() 
     
     
 if __name__ == "__main__":
     challenge_size= 16
     
-    main_LRS(challenge_size)
+    # main_LRS(challenge_size)
     main_HRS(challenge_size)
     
     

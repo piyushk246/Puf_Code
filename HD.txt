@@ -1,0 +1,12 @@
+HD_diff(HRS)
+
+Inter-chip Hamming distance is: 1.518291548591432
+Standard deviation: 8.839425297919167
+Total pairs: 17997000
+Minimum distance: 6.25
+Maximum distance: 90.625
+
+
+HD_diff(LRS)
+
+

@@ -61,6 +61,25 @@ class Plot:
         # plt.savefig('./HD_test(HRS).png',format = 'PNG' , dpi = 300)
         plt.show()
         
+    def C_vs_R(self,challenges,responses):
+        #plt.subplot(2, 2, 3)
+        # plt.xlim(0, 16)
+        plt.figure(0)
+        # ticks = np.arange(0, 16, 1)
+        # labels = [f'{tick} ' for tick in ticks]
+        # plt.xticks(ticks, labels,weight='bold')
+        # plt.ylim(0, 16)
+        # labels1 = [f'{tick} ' for tick in ticks]
+        # plt.yticks(ticks, labels1,weight='bold')
+        plt.plot(challenges,responses,'o',markersize=0.4,color='#F81506',label='LRS')
+        plt.title('Relation between challenge and response',fontweight='bold',fontsize=16)
+        plt.xlabel('Challenge',fontweight='bold',fontsize=14)
+        plt.ylabel('Response',fontweight='bold',fontsize=14)
+        plt.legend(fontsize=8)
+        plt.tight_layout()
+        plt.savefig('./c_vs_r.png',format = 'PNG' , dpi = 300)
+        plt.show()
+        
         
 # Example usage:
 # challenges = np.random.randint(0, 2, size=(10, 8))  # Example challenge data
