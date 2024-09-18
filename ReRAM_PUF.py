@@ -304,7 +304,7 @@ plt.legend(loc='lower left', facecolor='white', edgecolor='black', fontsize=10)
 # plt.legend(fontsize=10)
 
 # plt.tight_layout()
-plt.savefig(f'./results/UniqueResp/one{bin}_c16r16_hrs_metric(LRS).png',format = 'PNG' , dpi = 300)
+plt.savefig(f'./results/UniqueResp/one16_c16r16_hrs_metric(HRS).png',format = 'PNG' , dpi = 300)
 # plt.show()
 
 '''
