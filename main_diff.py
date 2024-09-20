@@ -26,7 +26,8 @@ def main_HRS(challenge_size):
     print("row:", row,"\ncolumns:" , row)
 
     rram = RRAMArrayArchitecture(row, columns)
-    assigner = RRAMArrayElementAssign(r'C:\Users\Piyush\Desktop\sem3\PUF\Code\fig5(b).xlsx', usecols='B', skiprows=[1, 2])
+    # /home/piyush/Desktop/Puf_Code/fig5(b).xlsx
+    assigner = RRAMArrayElementAssign('/home/piyush/Desktop/Puf_Code/fig5(b).xlsx', usecols='B', skiprows=[1, 2])
     # Load the data from the Excel sheet
     assigner.load_data()
 
@@ -109,8 +110,9 @@ def main_LRS(challenge_size):
 
     rram = RRAMArrayArchitecture(row, columns)
 
-    
-    assigner = RRAMArrayElementAssign(r'C:\Users\Piyush\Desktop\sem3\PUF\Code\fig5(b).xlsx', usecols='E', skiprows=[1, 2])
+    # '/home/piyush/Desktop/Puf_Code/fig5(b).xlsx'
+    assigner = RRAMArrayElementAssign('/home/piyush/Desktop/Puf_Code/fig5(b).xlsx', usecols='E', skiprows=[1, 2])
+    # assigner = RRAMArrayElementAssign(r'./fig5(b).xlsx', usecols='E', skiprows=[1, 2])
 
     # Load the data from the Excel sheet
     assigner.load_data()
