@@ -38,8 +38,8 @@ class HammingDistanceCalculator:
             
     def inter_chip(self):
         distances = []
-        # pufs = len(self.data)
-        pufs = 10000
+        pufs = len(self.data)
+        # pufs = 1000
         s = 0
 
         # Ensure the binary_responses are in a NumPy array format
@@ -84,6 +84,11 @@ class HammingDistanceCalculator:
 
         # Plot histogram for Hamming distances
         plt.hist(distances, bins=64, edgecolor='k', alpha=0.7, label='LRS')
+
+        plt.text(0.02, 0.98, f'SD  = {np.std(distances) :.2f}\nHD = {inter_hd : .2f}', 
+                            horizontalalignment='left', verticalalignment='top', 
+                            transform=plt.gca().transAxes, fontsize=8, color='k', weight='bold', 
+                            bbox=dict(facecolor='white', edgecolor='none', pad=3))
 
         # Add legend
         plt.legend(fontsize=14)
