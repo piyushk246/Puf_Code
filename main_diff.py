@@ -180,7 +180,7 @@ def main_LRS(challenge_size):
     
     # sum_deviation = sqrt(np.sum((1024 - counts)**2))
     
-
+ #fhkgnfkng
 
     
     # print("counts: ",counts)
