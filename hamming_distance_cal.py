@@ -38,8 +38,8 @@ class HammingDistanceCalculator:
             
     def inter_chip(self):
         distances = []
-        pufs = len(self.data)
-        # pufs = 6000
+        # pufs = len(self.data)
+        pufs = 10000
         s = 0
 
         # Ensure the binary_responses are in a NumPy array format
@@ -107,8 +107,8 @@ if __name__ == "__main__":
     # Assuming the second column in the CSV (index 1)
     # hd_calculator = HammingDistanceCalculator(r'./results/same(HRS)_ch16_rsp_32.csv', usecols=[1])
     # hd_calculator = HammingDistanceCalculator(r'./results/same(LRS)_ch16_rsp_32.csv', usecols=[1])
-    # hd_calculator = HammingDistanceCalculator(r'./results/diff(LRS)_ch16_rsp_32.csv', usecols=[1])
-    hd_calculator = HammingDistanceCalculator(r'./results/diff(HRS)_ch16_rsp_32.csv', usecols=[1])
+    hd_calculator = HammingDistanceCalculator(r'./results/diff(LRS)_ch16_rsp_32.csv', usecols=[1])
+    # hd_calculator = HammingDistanceCalculator(r'./results/diff(HRS)_ch16_rsp_32.csv', usecols=[1])
     
     hd_calculator.inter_chip()
     # print(hd)
