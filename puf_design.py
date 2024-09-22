@@ -167,3 +167,60 @@ class puf_design:
         challenges = np.array(challenges)  # List of all possible challenges
         return challenges, responses
 
+    def challenge_2response(self, array,  ref_res, col_page, challenge, select_line, count, block,file_name):
+        challenges = []
+        responses = []
+        responses_binary = []
+        challenges_binary = []
+        responce_bit = block
+        # Generating all possible challenge-response pairs
+        for i in range(2**(len(challenge))):
+            challenge_new = []
+            while i != 0:
+                r = i % 2
+                challenge_new.append(r)
+                i = i // 2
+            while len(challenge_new) < len(challenge):
+                challenge_new.append(0)
+            challenge_new.reverse()
+            challenges_binary.append(challenge_new)
+            challenge_row1 = challenge_new[:select_line]
+            challenge_col1 = challenge_new[select_line:]
+            
+            # Converting challenges to its decimal equivalent
+            challenges = self.converts_decimal((count-1), challenge_new, challenges)
+            
+            # Getting the response using get_response
+            # get_response(challenge_row, challenge_col, array, ref_res,  4)
+            response1 = self.get_response(challenge_row1, challenge_col1, array, ref_res, col_page)
+            
+            if block == 2:
+                # Reverse challenge_row1 and challenge_col1 for response2
+                challenge_row1_reversed = list(reversed(challenge_row1))
+                challenge_col1_reversed = list(reversed(challenge_col1))
+                
+                response2 = self.get_response(challenge_row1_reversed, challenge_col1_reversed, array, ref_res, col_page)
+                response = np.append(response1, response2)
+                # print(responses)
+                responses = self.converts_decimal((2*count-1), response, responses)
+                responses_binary.append(response)
+
+                
+            else:
+                response = response1
+                responses = self.converts_decimal((count-1), response, responses)
+                # print(responses)
+                responses_binary.append(response)
+
+
+        responses_binary = np.array(responses_binary)  # List of all possible responses in binary format
+        # print(responses_binary)
+        
+        responses = np.array(responses)  # List of all possible responses in decimal format
+        # print(responses)
+        crp = pd.DataFrame({f'Challenges_{len(challenge)}': challenges_binary, f'ResponsesBinary_{responce_bit*len(challenge)}': responses_binary.tolist(), 'ChallengeDecimal': challenges, 'ResponseDecimal': responses})
+        # crp.to_csv(f'output_16bit(LRS)rsp{responce_bit*len(challenge)}.csv', index=False)
+        crp.to_csv(f'{file_name}_{responce_bit*len(challenge)}.csv', index=False)
+        
+        challenges = np.array(challenges)  # List of all possible challenges
+        return challenges, responses
