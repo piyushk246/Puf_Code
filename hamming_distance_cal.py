@@ -115,7 +115,7 @@ class HammingDistanceCalculator:
         # plt.show()
         # plt.show(block=False)
 
-        return 1
+        # return 1
             
     def inter_hd(self):
         pass
@@ -130,7 +130,7 @@ if __name__ == "__main__":
     # state = "HRS"
     state = ["LRS","HRS"]
 
-    noOfRes = 12000
+    noOfRes = 1200
 
     for i in range(2):
         architectire = arch[i]
