@@ -64,11 +64,41 @@ class RRAMArrayElementAssign:
             rram_array.set_value(i, j, self.data[index % len(self.data)])
             index += 1
                 
+    def populate_different_columns(self, rram_array, column_mapping):
+        """
+        Populates different sections of the RRAM array with data from different columns.
+
+        Parameters:
+        - rram_array: The RRAM array object with 'rows', 'columns', and 'set_value' method.
+        - column_mapping: A dictionary that maps the array indices (i.e., portion) to Excel column letters.
+                          Example: {0: 'B', 1: 'C'} would populate the first portion with data from column 'B' 
+                          and the second portion with data from column 'C'.
+        """
+        for portion, col in column_mapping.items():
+            # Load data for the specific column
+            df = pd.read_excel(self.excel_path, usecols=col, skiprows=self.skiprows)
+            data = df.to_numpy().flatten()
+
+            # Determine where to populate this data based on the portion
+            start_index = portion * len(data)
+            end_index = start_index + len(data)
+
+            # Populate the array in the specified portion
+            index = 0
+            for i in range(rram_array.rows):
+                for j in range(rram_array.columns):
+                    array_index = i * rram_array.columns + j
+                    if start_index <= array_index < end_index and index < len(data):
+                        rram_array.set_value(i, j, data[index])
+                        index += 1
+                    elif array_index >= end_index:
+                        break
 
 # Example usage
 # populator = RRAMArrayElementAssign(r'C:\Users\Piyush\Desktop\sem3\PUF\Code\fig5(b).xlsx', usecols='B', skiprows=[1, 2])
+populator = RRAMArrayElementAssign(r'.\\fig5(b).xlsx', usecols='B', skiprows=[1, 2])
 
 # # Load the data from the Excel sheet
-# populator.load_data()
+populator.load_data()
 
-# print("All is the done")
+print("All is the done")

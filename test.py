@@ -1,73 +1,59 @@
-import numpy as np
 import pandas as pd
-import matplotlib.pyplot as plt
 
-def inter_chip(pufs, binary_responses):
-    distances = []
-    s = 0
+class DataPopulator:
+    def __init__(self, excel_path, skiprows=0):
+        self.excel_path = excel_path
+        self.skiprows = skiprows
 
-    # Ensure the binary_responses are in a NumPy array format
-    responses = np.asarray(binary_responses)
+    def populate_different_columns(self, rram_array, column_mapping):
+        # Read the Excel file to get the correct column names
+        df_all = pd.read_excel(self.excel_path, skiprows=self.skiprows)
+        print("Available columns:", df_all.columns)
 
-    # Calculate Hamming distances between all pairs of responses
-    for i in range(pufs - 1):
-        for j in range(i + 1, pufs):
-            dist = hamming_distance(responses[i], responses[j])
-            s += dist
-            distances.append(dist)
+        for portion, col in column_mapping.items():
+            if col not in df_all.columns:
+                raise ValueError(f"Column '{col}' not found in the Excel file")
 
-    # Calculate inter-chip Hamming distance (in percentage form)
-    inter_hd = (2 * s * 100) / (pufs * (pufs - 1) * len(responses[0]))
-    
-    # Normalize distances to percentage form
-    distances = [(dist * 100 / len(responses[0])) for dist in distances]
+            # Load data for the specific column
+            df = pd.read_excel(self.excel_path, usecols=[df_all.columns.get_loc(col)], skiprows=self.skiprows)
+            data = df.to_numpy().flatten()
 
-    # Save distances to an Excel file
-    df_dis = pd.DataFrame(distances)
-    df_dis.to_excel('dis.xlsx', index=False)
-    
-    # Print statistics
-    print("Inter-chip Hamming distance is:", inter_hd)
-    print("Distances:", distances)
-    print("Standard deviation:", np.std(distances))
-    print("Total pairs:", len(distances))
-    print("Minimum distance:", min(distances))
-    print("Maximum distance:", max(distances))
-    
-    # Plotting the histogram
-    plt.figure(figsize=(8, 6))  # Specify figure size
-    # plt.xlim(0, 30)  # Set limits for the x-axis
-    plt.yticks(weight='bold', fontsize=12)  # Customize y-axis ticks
+            # Determine where to populate this data based on the portion
+            sub_array_size = (rram_array.rows * rram_array.columns) // len(column_mapping)
+            start_index = portion * sub_array_size
+            end_index = start_index + len(data)
 
-    # Plot histogram for Hamming distances
-    plt.hist(distances, bins=16, edgecolor='k', alpha=0.7, label='HRS')
+            # Populate the array in the specified portion
+            index = 0
+            for j in range(rram_array.columns):
+                for i in range(rram_array.rows):
+                    array_index = j * rram_array.rows + i
+                    if start_index <= array_index < end_index and index < len(data):
+                        rram_array.set_value(i, j, data[index])
+                        index += 1
+                    elif array_index >= end_index:
+                        break
 
-    # Customize the title and labels
-    plt.title('Hamming Distance Time Multiplexing', fontweight='bold', fontsize=12)
-    plt.xlabel('Hamming Distance', fontweight='bold', fontsize=14)
-    plt.ylabel('Frequency', fontweight='bold', fontsize=14)
+# Example usage
+class RRAMArray:
+    def __init__(self, rows, columns):
+        self.rows = rows
+        self.columns = columns
+        self.array = [[0 for _ in range(columns)] for _ in range(rows)]
 
-    # Add legend
-    plt.legend(fontsize=14)
+    def set_value(self, row, col, value):
+        self.array[row][col] = value
 
-    # Uncomment the following line if you want to save the plot
-    # plt.savefig('./Hamming_Distance_Plot.png', format='PNG', dpi=300)
+# Initialize the RRAM array
+rram_array = RRAMArray(4, 4)
 
-    # Show the plot
-    plt.show()
-    
-    return distances
+# Define the column mapping (portion: column index)
+column_mapping = {0: "A", 1: "B", 2: "C", 3: "D"}
 
-def hamming_distance(response1, response2):
-    # Compute the Hamming distance between two binary responses
-    return sum(r1 != r2 for r1, r2 in zip(response1, response2))
+# Create an instance of DataPopulator and populate the array
+data_populator = DataPopulator('./data.xlsx')
+data_populator.populate_different_columns(rram_array, column_mapping)
 
-# Example usage:
-binary_responses = [
-    [0, 1, 0, 1, 1, 0, 1, 0],
-    [1, 0, 1, 0, 0, 1, 0, 1],
-    [0, 1, 1, 0, 1, 1, 0, 0],
-    [1, 1, 0, 0, 0, 1, 1, 1]
-]
-
-distances = inter_chip(pufs=len(binary_responses), binary_responses=binary_responses)
+# Print the populated array
+for row in rram_array.array:
+    print(row)
