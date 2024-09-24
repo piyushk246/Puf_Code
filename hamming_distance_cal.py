@@ -2,6 +2,7 @@ import pandas as pd
 import numpy as np
 import matplotlib.pyplot as plt
 import ast
+import time
 
 class HammingDistanceCalculator:        
 
@@ -36,10 +37,11 @@ class HammingDistanceCalculator:
     #             ham_dis.append(hamming_dist)  # Append inside the loop
     #     return ham_dis
             
-    def inter_chip(self):
+    def inter_chip(self,architectire,state,noOfRes):
         distances = []
-        pufs = len(self.data)
-        # pufs = 1000
+        # pufs = len(self.data)
+        pufs = noOfRes
+        # pufs = 20000
         s = 0
 
         # Ensure the binary_responses are in a NumPy array format
@@ -51,6 +53,8 @@ class HammingDistanceCalculator:
                 dist = self.hamming_distance(responses[i], responses[j])
                 s += dist
                 distances.append(dist)
+            if len(distances) == 10000:
+                pass
 
         # Calculate inter-chip Hamming distance (in percentage form)
         inter_hd = (2 * s * 100) / (pufs * (pufs - 1) * len(responses[0]))
@@ -71,19 +75,22 @@ class HammingDistanceCalculator:
         print("Maximum distance:", max(distances))
 
         # Plotting the histogram
-        # plt.figure(figsize=(8, 6))  # Specify figure size
+        plt.figure(figsize=(8, 6))  # Specify figure size
         # plt.xlim(0, 30)  # Set limits for the x-axis
         plt.yticks(weight='bold', fontsize=12)  # Customize y-axis ticks
 
 
 
         # Customize the title and labels
-        plt.title('Hamming Distance Time Multiplexing', fontweight='bold', fontsize=12)
+        if(architectire == "same"):
+            plt.title('Hamming Distance Time Multiplexing', fontweight='bold', fontsize=12)
+        elif (architectire == "diff"):
+            plt.title('Hamming Distance Hardware Multiplexing', fontweight='bold', fontsize=12)
         plt.xlabel('Hamming Distance', fontweight='bold', fontsize=14)
         plt.ylabel('Frequency', fontweight='bold', fontsize=14)
 
         # Plot histogram for Hamming distances
-        plt.hist(distances, bins=64, edgecolor='k', alpha=0.7, label='LRS')
+        plt.hist(distances, bins=64, edgecolor='k', alpha=0.7, label=f'{state}')
 
         plt.text(0.02, 0.98, f'SD  = {np.std(distances) :.2f}\nHD = {inter_hd : .2f}', 
                             horizontalalignment='left', verticalalignment='top', 
@@ -95,27 +102,66 @@ class HammingDistanceCalculator:
 
         # Uncomment the following line if you want to save the plot
         # plt.savefig('./results/HD/HD_diff(LRS).png', format='PNG', dpi=300)
-        plt.savefig('./results/HD/all_HD_diff(LRS).png', format='PNG', dpi=300)
+        # plt.savefig('./results/HD/all_HD_diff(LRS).png', format='PNG', dpi=300)
         # plt.savefig('./results/HD/HD_diff(HRS).png', format='PNG', dpi=300)
         # plt.savefig('./results/HD/HD_same(LRS).png', format='PNG', dpi=300)
         # plt.savefig('./results/HD/HD_same(HRS).png', format='PNG', dpi=300)
-        plt.tight_layout()
-        # Show the plot
-        plt.show()
 
-        # return distances
+        plt.tight_layout()
+        plt.savefig(f'./results/HD/HD_{architectire}{(state)}.png', format='PNG', dpi=300)
+
+        # time.sleep(20)
+        # Show the plot
+        # plt.show()
+        # plt.show(block=False)
+
+        return 1
             
     def inter_hd(self):
         pass
         
 if __name__ == "__main__":
+
+    arch = ["same","diff"]
+
+    # architectire = "diff"
+    # architectire = "same"
+    # state = "LRS"
+    # state = "HRS"
+    state = ["LRS","HRS"]
+
+    noOfRes = 12000
+
+    for i in range(2):
+        architectire = arch[i]
+        print(architectire)
+        if (architectire == "same"):
+            for state_s in state:
+                if (state_s == "LRS" ):
+                    hd_calculator = HammingDistanceCalculator(r'./results/same(LRS)_ch16_rsp_32.csv', usecols=[1])
+                    hd_calculator.inter_chip(architectire,state_s,noOfRes)
+                elif (state_s == "HRS" ):
+                    hd_calculator = HammingDistanceCalculator(r'./results/same(HRS)_ch16_rsp_32.csv', usecols=[1])
+                    hd_calculator.inter_chip(architectire,state_s,noOfRes)
+
+        elif (architectire == "diff"):
+            for state_d in state:
+                if (state_d == "LRS" ):
+                    hd_calculator = HammingDistanceCalculator(r'./results/diff(LRS)_ch16_rsp_32.csv', usecols=[1])
+                    hd_calculator.inter_chip(architectire,state_d,noOfRes)
+                elif (state_d == "HRS" ):
+                    hd_calculator = HammingDistanceCalculator(r'./results/diff(HRS)_ch16_rsp_32.csv', usecols=[1])
+                    hd_calculator.inter_chip(architectire,state_d,noOfRes)
+
+            
+
     # Assuming the second column in the CSV (index 1)
     # hd_calculator = HammingDistanceCalculator(r'./results/same(HRS)_ch16_rsp_32.csv', usecols=[1])
     # hd_calculator = HammingDistanceCalculator(r'./results/same(LRS)_ch16_rsp_32.csv', usecols=[1])
-    hd_calculator = HammingDistanceCalculator(r'./results/diff(LRS)_ch16_rsp_32.csv', usecols=[1])
+    # hd_calculator = HammingDistanceCalculator(r'./results/diff(LRS)_ch16_rsp_32.csv', usecols=[1])
     # hd_calculator = HammingDistanceCalculator(r'./results/diff(HRS)_ch16_rsp_32.csv', usecols=[1])
     
-    hd_calculator.inter_chip()
+    # hd_calculator.inter_chip(architectire,state,noOfRes)
     # print(hd)
     
 
