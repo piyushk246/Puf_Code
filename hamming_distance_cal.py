@@ -108,7 +108,7 @@ class HammingDistanceCalculator:
         # plt.savefig('./results/HD/HD_same(HRS).png', format='PNG', dpi=300)
 
         plt.tight_layout()
-        plt.savefig(f'./results/HD/HD_{architectire}{(state)}.png', format='PNG', dpi=300)
+        plt.savefig(f'./results/HD/HD_{architectire}({state}).png', format='PNG', dpi=300)
 
         # time.sleep(20)
         # Show the plot
