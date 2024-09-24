@@ -110,7 +110,8 @@ class HammingDistanceCalculator:
         plt.tight_layout()
         plt.savefig(f'./results/HD/HD_{architectire}({state}).png', format='PNG', dpi=300)
 
-        # time.sleep(20)
+        distances = []
+        time.sleep(5)
         # Show the plot
         # plt.show()
         # plt.show(block=False)
@@ -130,7 +131,7 @@ if __name__ == "__main__":
     # state = "HRS"
     state = ["LRS","HRS"]
 
-    noOfRes = 1200
+    noOfRes = 15000
 
     for i in range(2):
         architectire = arch[i]
