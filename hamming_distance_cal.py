@@ -131,7 +131,7 @@ if __name__ == "__main__":
     # state = "HRS"
     state = ["LRS","HRS"]
 
-    noOfRes = 15000
+    noOfRes = 20000
 
     for i in range(2):
         architectire = arch[i]
