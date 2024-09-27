@@ -21,8 +21,9 @@ def row_col_bit(a):
 def main_HRS(challenge_size):
     ref_res=8.1814
     x,y=row_col_bit(challenge_size)
-    row = 2**x
+    row = 2**(x+1)
     columns = row
+    colPerPage = 2**(y-1)
     print("row:", row,"\ncolumns:" , row)
 
     rram = RRAMArrayArchitecture(row, columns)
@@ -39,9 +40,8 @@ def main_HRS(challenge_size):
 
     # def challenge_response(self, array,  ref_res, col_page, challenge, select_line, challenge_size, block):
     # def challenge_response_diff(self, array1, array2, ref_res, col_page, challenge, select_line, count):
-    # challenges1, responses1 = Puf.challenge_response( array[0], ref_res,   64,    challenge,    10,      16,              1 )
     file_name = "./results/diff(HRS)_ch16_rsp"
-    challenges1, responses1 = Puf.challenge_response_diff( array[0], array[1], ref_res,   64,    challenge,    10,      16,file_name)
+    challenges1, responses1 = Puf.challenge_response_diff( array[0], array[1], ref_res,   colPerPage,    challenge,    10,      16,file_name)
 
     ideal = 2048
     bin = 32
