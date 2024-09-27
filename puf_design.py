@@ -2,6 +2,9 @@
 import numpy as np
 import pandas as pd
 
+from RRAMArrayArchitecture import RRAMArrayArchitecture
+from RRAMArrayArchitecture import RRAMArrayElementAssign
+
 class puf_design:
     def __init__(self) -> None:
         pass
@@ -167,20 +170,20 @@ class puf_design:
         challenges = np.array(challenges)  # List of all possible challenges
         return challenges, responses
 
-    def challenge_2response(self, array,  ref_res, col_page, challenge, select_line, count, block,file_name):
+    def Decoder_challenge_2response(self, array,  ref_res, col_page, challenge_len, select_line, count, block,file_name):
         challenges = []
         responses = []
         responses_binary = []
         challenges_binary = []
         responce_bit = block
         # Generating all possible challenge-response pairs
-        for i in range(2**(len(challenge))):
+        for i in range(2**(challenge_len)):
             challenge_new = []
             while i != 0:
                 r = i % 2
                 challenge_new.append(r)
                 i = i // 2
-            while len(challenge_new) < len(challenge):
+            while len(challenge_new) < challenge_len:
                 challenge_new.append(0)
             challenge_new.reverse()
             challenges_binary.append(challenge_new)
@@ -218,9 +221,32 @@ class puf_design:
         
         responses = np.array(responses)  # List of all possible responses in decimal format
         # print(responses)
-        crp = pd.DataFrame({f'Challenges_{len(challenge)}': challenges_binary, f'ResponsesBinary_{responce_bit*len(challenge)}': responses_binary.tolist(), 'ChallengeDecimal': challenges, 'ResponseDecimal': responses})
+        crp = pd.DataFrame({f'Challenges_{challenge_len}': challenges_binary, f'ResponsesBinary_{responce_bit*challenge_len}': responses_binary.tolist(), 'ChallengeDecimal': challenges, 'ResponseDecimal': responses})
         # crp.to_csv(f'output_16bit(LRS)rsp{responce_bit*len(challenge)}.csv', index=False)
-        crp.to_csv(f'{file_name}_{responce_bit*len(challenge)}.csv', index=False)
+        crp.to_csv(f'{file_name}_{responce_bit*challenge_len}.csv', index=False)
         
         challenges = np.array(challenges)  # List of all possible challenges
         return challenges, responses
+    
+
+if __name__ == '__main__':
+
+
+    # # Create an instance of RRAMArrayArchitecture
+
+            
+    rram = RRAMArrayArchitecture(2048, 2048)
+    # usecols='E' == LRS
+    populator = RRAMArrayElementAssign(r'C:\Users\Piyush\Desktop\sem3\PUF\Code\fig5(b).xlsx', usecols='B', skiprows=[1, 2])
+    # Load the data from the Excel sheet
+    populator.load_data()
+    # Populate the RRAM array with the data
+    populator.populate(rram)
+    # rram.display_architecture()
+    array = rram.get_array()
+    # print("Returned Array:",array)
+    
+    file_name = "./decode_ch16_rsp"
+    PUF = puf_design()
+    # def Decoder_challenge_2response(self, array,  ref_res, col_page, challenge_len, select_line, count, block,file_name):
+    PUF.Decoder_challenge_2response(array,  8.15, 32, 16, 11, 16, 1, file_name)
