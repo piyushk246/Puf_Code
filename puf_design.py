@@ -246,7 +246,7 @@ if __name__ == '__main__':
     array = rram.get_array()
     # print("Returned Array:",array)
     
-    file_name = "./decode_ch16_rsp"
+    file_name = "./decode_ch16_rsp1"
     PUF = puf_design()
     # def Decoder_challenge_2response(self, array,  ref_res, col_page, challenge_len, select_line, count, block,file_name):
     PUF.Decoder_challenge_2response(array,  8.15, 32, 16, 11, 16, 1, file_name)
