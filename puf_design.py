@@ -47,6 +47,17 @@ class puf_design:
             count += col_page
         return np.array(response)
 
+    def get_response_Deco(self,challenge_row, challenge_col, rram_cell, ref_res, col_page):
+        response = []
+        sel_row = self.row_decoder(challenge_row)
+        sel_col = self.col_mux(challenge_col)
+        
+        count = 0
+        for _ in range((len(challenge_row) + len(challenge_col))):
+            response.append(1 if rram_cell[sel_row][sel_col + count] > ref_res else 0)
+            count += col_page
+        return np.array(response)
+
     # # puf_instance will give the responses of various pufs
     # def puf_instances(self,challenge_row, challenge_col, res_f, row, col, ref_res, col_page):
     #     num_cells = row * col
@@ -170,11 +181,12 @@ class puf_design:
         challenges = np.array(challenges)  # List of all possible challenges
         return challenges, responses
 
-    def Decoder_challenge_2response(self, array,  ref_res, col_page, challenge_len, select_line, count, block,file_name):
+    def Decoder_challenge_2response(self, array,  ref_res, col_page, challenge_len, select_line, count, file_name):
         challenges = []
         responses = []
         responses_binary = []
         challenges_binary = []
+        block = 2
         responce_bit = block
         # Generating all possible challenge-response pairs
         for i in range(2**(challenge_len)):
@@ -189,31 +201,38 @@ class puf_design:
             challenges_binary.append(challenge_new)
             challenge_row1 = challenge_new[:select_line]
             challenge_col1 = challenge_new[select_line:]
-            
+
+            # print(len(challenge_col1))
             # Converting challenges to its decimal equivalent
             challenges = self.converts_decimal((count-1), challenge_new, challenges)
-            
+            print(challenges)
+
             # Getting the response using get_response
             # get_response(challenge_row, challenge_col, array, ref_res,  4)
             response1 = self.get_response(challenge_row1, challenge_col1, array, ref_res, col_page)
             
-            if block == 2:
-                # Reverse challenge_row1 and challenge_col1 for response2
-                challenge_row1_reversed = list(reversed(challenge_row1))
-                challenge_col1_reversed = list(reversed(challenge_col1))
+            # if block == 2:
+            #     # Reverse challenge_row1 and challenge_col1 for response2
+            #     challenge_row1_reversed = list(reversed(challenge_row1))
+            #     challenge_col1_reversed = list(reversed(challenge_col1))
                 
-                response2 = self.get_response(challenge_row1_reversed, challenge_col1_reversed, array, ref_res, col_page)
-                response = np.append(response1, response2)
-                # print(responses)
-                responses = self.converts_decimal((2*count-1), response, responses)
-                responses_binary.append(response)
+            #     response2 = self.get_response(challenge_row1_reversed, challenge_col1_reversed, array, ref_res, col_page)
+            #     response = np.append(response1, response2)
+            #     # print(responses)
+            #     responses = self.converts_decimal((2*count-1), response, responses)
+            #     responses_binary.append(response)
 
                 
-            else:
-                response = response1
-                responses = self.converts_decimal((count-1), response, responses)
-                # print(responses)
-                responses_binary.append(response)
+            # else:
+            #     response = response1
+            #     responses = self.converts_decimal((count-1), response, responses)
+            #     # print(responses)
+            #     responses_binary.append(response)
+
+            response = response1
+            responses = self.converts_decimal((count-1), response, responses)
+            # print(responses)
+            responses_binary.append(response)
 
 
         responses_binary = np.array(responses_binary)  # List of all possible responses in binary format
@@ -223,7 +242,7 @@ class puf_design:
         # print(responses)
         crp = pd.DataFrame({f'Challenges_{challenge_len}': challenges_binary, f'ResponsesBinary_{responce_bit*challenge_len}': responses_binary.tolist(), 'ChallengeDecimal': challenges, 'ResponseDecimal': responses})
         # crp.to_csv(f'output_16bit(LRS)rsp{responce_bit*len(challenge)}.csv', index=False)
-        crp.to_csv(f'{file_name}_{responce_bit*challenge_len}.csv', index=False)
+        crp.to_csv(f'{file_name}_{2*challenge_len}.csv', index=False)
         
         challenges = np.array(challenges)  # List of all possible challenges
         return challenges, responses
@@ -232,12 +251,13 @@ class puf_design:
 if __name__ == '__main__':
 
 
-    # # Create an instance of RRAMArrayArchitecture
+    # # Create an instance of RRAMArrayArchitecture2048
 
             
     rram = RRAMArrayArchitecture(2048, 2048)
+    
     # usecols='E' == LRS
-    populator = RRAMArrayElementAssign(r'C:\Users\Piyush\Desktop\sem3\PUF\Code\fig5(b).xlsx', usecols='B', skiprows=[1, 2])
+    populator = RRAMArrayElementAssign(r'fig5(b).xlsx', usecols='B', skiprows=[1, 2])
     # Load the data from the Excel sheet
     populator.load_data()
     # Populate the RRAM array with the data
@@ -248,5 +268,5 @@ if __name__ == '__main__':
     
     file_name = "./decode_ch16_rsp"
     PUF = puf_design()
-    # def Decoder_challenge_2response(self, array,  ref_res, col_page, challenge_len, select_line, count, block,file_name):
-    PUF.Decoder_challenge_2response(array,  8.15, 32, 16, 11, 16, 1, file_name)
+    # def Decoder_challenge_2response(self, array,  ref_res, col_page, challenge_len, select_line, count,file_name):
+    PUF.Decoder_challenge_2response(array = array,  ref_res = 8.15, col_page =32, challenge_len =16, select_line = 11, count= 16, file_name = file_name)
