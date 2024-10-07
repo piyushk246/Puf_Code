@@ -33,7 +33,7 @@ def main_LRS(challenge_size):
     rram = RRAMArrayArchitecture(row, columns)
     
     # usecols='E' == LRS
-    populator = RRAMArrayElementAssign(r'fig5(b).xlsx', usecols='B', skiprows=[1, 2])
+    populator = RRAMArrayElementAssign(r'fig5(b).xlsx', usecols='E', skiprows=[1, 2])
 
     # Load the data from the Excel sheet
     populator.load_data()
@@ -60,8 +60,8 @@ def main_LRS(challenge_size):
     # file_name = "diff_output_16bit(LRS)rsp"
     file_name = "./results/deco(LRS)_ch16_rsp"
     #         def Dec0_challenge_2response(self, array,  ref_res, col_page, challenge_len, select_line, count, block,file_name):
-    challenges1, responses1 = Puf.Decoder_challenge_2response( array, ref_res,  col_page,    challenge_len= 16,    select_line=11,      count = 16, file_name = file_name )
-
+    # challenges1, responses1 = Puf.Decoder_challenge_2response( array, ref_res,  col_page,    challenge_len= 16,    select_line=11,      count = 16, file_name = file_name )
+    challenges1, responses1 = Puf.Decoder_challenge_2response(array = array,  ref_res = ref_res, col_page =32, challenge_len =16, select_line = 11, count= 16, file_name = file_name)
     #         #PLOTING WITHOUT THE MATRIC
     # plt.hist(responses1,bins=16,edgecolor='k', alpha=0.7,label='HRS')
     # plt.axhline(y=4096, color='r', linestyle='--', label='Ideal')
@@ -77,47 +77,47 @@ def main_LRS(challenge_size):
     # cr.C_vs_R(challenges1, responses1)
 
 
-    # ideal = 2048
-    # bin = 32
-    #         #PLOTING WITH THE MATRIC
-    # plt.figure(0)
-    # counts, bins, bars = plt.hist(responses1, bins=bin, alpha=0.6, edgecolor='black',label='HRS')
-    # plt.axhline(y=ideal, color='r', linestyle='--', label=f'Ideal({ideal})')
-    # plt.title('Uniqueness of responses',fontweight='bold',fontsize=16 )
-    # plt.xlabel('Responses',fontweight='bold',fontsize=14)
-    # plt.ylabel('Frequency',fontweight='bold',fontsize=14)
-    # plt.bar_label(bars,fontsize=6)
+    ideal = 2048
+    bin = 32
+            #PLOTING WITH THE MATRIC
+    plt.figure(0)
+    counts, bins, bars = plt.hist(responses1, bins=bin, alpha=0.6, edgecolor='black',label='LRS')
+    plt.axhline(y=ideal, color='r', linestyle='--', label=f'Ideal({ideal})')
+    plt.title('Uniqueness of responses',fontweight='bold',fontsize=16 )
+    plt.xlabel('Responses',fontweight='bold',fontsize=14)
+    plt.ylabel('Frequency',fontweight='bold',fontsize=14)
+    plt.bar_label(bars,fontsize=6)
     
-    # msq_error  = np.sqrt(np.sum((ideal - counts)**2)/len(counts))
+    msq_error  = np.sqrt(np.sum((ideal - counts)**2)/len(counts))
     
-    # plt.text(0.4, 0.4, f'metric  = {msq_error :.2f}', 
-    #      horizontalalignment='left', verticalalignment='top', 
-    #      transform=plt.gca().transAxes, fontsize=8, color='k', weight='bold', 
-    #      bbox=dict(facecolor='white', edgecolor='none', pad=3))
+    plt.text(0.4, 0.4, f'metric  = {msq_error :.2f}', 
+         horizontalalignment='left', verticalalignment='top', 
+         transform=plt.gca().transAxes, fontsize=8, color='k', weight='bold', 
+         bbox=dict(facecolor='white', edgecolor='none', pad=3))
      
-    # # Display the legend
-    # plt.legend(loc='lower left', facecolor='white', edgecolor='black', fontsize=10)
-    # # plt.legend(fontsize=10)
+    # Display the legend
+    plt.legend(loc='lower left', facecolor='white', edgecolor='black', fontsize=10)
+    # plt.legend(fontsize=10)
     
-    # plt.tight_layout()
-    # plt.savefig(f'./results/sam{bin}_c16r32_hrs_metric(HRS).png',format = 'PNG' , dpi = 300)
+    plt.tight_layout()
+    plt.savefig(f'./results/UniqueResp/deco{bin}_c16r32_lrs_metric(LRS).png',format = 'PNG' , dpi = 300)
     
-    # plt.figure(1)
-    # # ticks = np.arange(0, 16, 1)
-    # # labels = [f'{tick} ' for tick in ticks]
-    # # plt.xticks(ticks, labels,weight='bold')
-    # # plt.ylim(0, 16)
-    # # labels1 = [f'{tick} ' for tick in ticks]
-    # # plt.yticks(ticks, labels1,weight='bold')
-    # plt.plot(challenges1,responses1,'o',markersize=0.4,color='#F81506',label='HRS')
-    # plt.title('Relation between challenge and response',fontweight='bold',fontsize=16)
-    # plt.xlabel('Challenge',fontweight='bold',fontsize=14)
-    # plt.ylabel('Response',fontweight='bold',fontsize=14)
-    # plt.legend(fontsize=12)
-    # plt.tight_layout()
-    # # plt.savefig('./results/ChaRes/HRS_ch_rsp.png',format = 'PNG' , dpi = 300)
+    plt.figure(1)
+    # ticks = np.arange(0, 16, 1)
+    # labels = [f'{tick} ' for tick in ticks]
+    # plt.xticks(ticks, labels,weight='bold')
+    # plt.ylim(0, 16)
+    # labels1 = [f'{tick} ' for tick in ticks]
+    # plt.yticks(ticks, labels1,weight='bold')
+    plt.plot(challenges1,responses1,'o',markersize=0.4,color='blue',label='LRS')
+    plt.title('Relation between challenge and response',fontweight='bold',fontsize=16)
+    plt.xlabel('Challenge',fontweight='bold',fontsize=14)
+    plt.ylabel('Response',fontweight='bold',fontsize=14)
+    plt.legend(fontsize=12)
+    plt.tight_layout()
+    # plt.savefig('./results/ChaRes/LRS_ch_rsp.png',format = 'PNG' , dpi = 300)
     
-    # plt.show() 
+    plt.show() 
     
 
 def main_HRS(challenge_size):
@@ -162,7 +162,8 @@ def main_HRS(challenge_size):
     # file_name = "diff_output_16bit(LRS)rsp"
     file_name = "./results/deco(HRS)_ch16_rsp"
     #         def Dec0_challenge_2response(self, array,  ref_res, col_page, challenge_len, select_line, count, block,file_name):
-    challenges1, responses1 = Puf.Dec0_challenge_2response( array, ref_res,  col_page,    challenge_len= 16,    select_line=10,      count = 16, file_name = file_name )
+    # challenges1, responses1 = Puf.Dec0_challenge_2response( array, ref_res,  col_page,    challenge_len= 16,    select_line=11,      count = 16, file_name = file_name )
+    challenges1, responses1 = Puf.Decoder_challenge_2response(array = array,  ref_res = ref_res, col_page =32, challenge_len =16, select_line = 11, count= 16, file_name = file_name)
 
     #         #PLOTING WITHOUT THE MATRIC
     # plt.hist(responses1,bins=16,edgecolor='k', alpha=0.7,label='HRS')
@@ -179,47 +180,47 @@ def main_HRS(challenge_size):
     # cr.C_vs_R(challenges1, responses1)
 
 
-    # ideal = 2048
-    # bin = 32
-    #         #PLOTING WITH THE MATRIC
-    # plt.figure(0)
-    # counts, bins, bars = plt.hist(responses1, bins=bin, alpha=0.6, edgecolor='black',label='HRS')
-    # plt.axhline(y=ideal, color='r', linestyle='--', label=f'Ideal({ideal})')
-    # plt.title('Uniqueness of responses',fontweight='bold',fontsize=16 )
-    # plt.xlabel('Responses',fontweight='bold',fontsize=14)
-    # plt.ylabel('Frequency',fontweight='bold',fontsize=14)
-    # plt.bar_label(bars,fontsize=6)
+    ideal = 2048
+    bin = 32
+            #PLOTING WITH THE MATRIC
+    plt.figure(0)
+    counts, bins, bars = plt.hist(responses1, bins=bin, alpha=0.6, edgecolor='black',label='HRS')
+    plt.axhline(y=ideal, color='r', linestyle='--', label=f'Ideal({ideal})')
+    plt.title('Uniqueness of responses',fontweight='bold',fontsize=16 )
+    plt.xlabel('Responses',fontweight='bold',fontsize=14)
+    plt.ylabel('Frequency',fontweight='bold',fontsize=14)
+    plt.bar_label(bars,fontsize=6)
     
-    # msq_error  = np.sqrt(np.sum((ideal - counts)**2)/len(counts))
+    msq_error  = np.sqrt(np.sum((ideal - counts)**2)/len(counts))
     
-    # plt.text(0.4, 0.4, f'metric  = {msq_error :.2f}', 
-    #      horizontalalignment='left', verticalalignment='top', 
-    #      transform=plt.gca().transAxes, fontsize=8, color='k', weight='bold', 
-    #      bbox=dict(facecolor='white', edgecolor='none', pad=3))
+    plt.text(0.4, 0.4, f'metric  = {msq_error :.2f}', 
+         horizontalalignment='left', verticalalignment='top', 
+         transform=plt.gca().transAxes, fontsize=8, color='k', weight='bold', 
+         bbox=dict(facecolor='white', edgecolor='none', pad=3))
      
-    # # Display the legend
-    # plt.legend(loc='lower left', facecolor='white', edgecolor='black', fontsize=10)
-    # # plt.legend(fontsize=10)
+    # Display the legend
+    plt.legend(loc='lower left', facecolor='white', edgecolor='black', fontsize=10)
+    # plt.legend(fontsize=10)
     
-    # plt.tight_layout()
-    # plt.savefig(f'./results/sam{bin}_c16r32_hrs_metric(HRS).png',format = 'PNG' , dpi = 300)
+    plt.tight_layout()
+    plt.savefig(f'./results/UniqueResp/deco{bin}_c16r32_hrs_metric(HRS).png',format = 'PNG' , dpi = 300)
     
-    # plt.figure(1)
-    # # ticks = np.arange(0, 16, 1)
-    # # labels = [f'{tick} ' for tick in ticks]
-    # # plt.xticks(ticks, labels,weight='bold')
-    # # plt.ylim(0, 16)
-    # # labels1 = [f'{tick} ' for tick in ticks]
-    # # plt.yticks(ticks, labels1,weight='bold')
-    # plt.plot(challenges1,responses1,'o',markersize=0.4,color='#F81506',label='HRS')
-    # plt.title('Relation between challenge and response',fontweight='bold',fontsize=16)
-    # plt.xlabel('Challenge',fontweight='bold',fontsize=14)
-    # plt.ylabel('Response',fontweight='bold',fontsize=14)
-    # plt.legend(fontsize=12)
-    # plt.tight_layout()
-    # # plt.savefig('./results/ChaRes/HRS_ch_rsp.png',format = 'PNG' , dpi = 300)
+    plt.figure(1)
+    # ticks = np.arange(0, 16, 1)
+    # labels = [f'{tick} ' for tick in ticks]
+    # plt.xticks(ticks, labels,weight='bold')
+    # plt.ylim(0, 16)
+    # labels1 = [f'{tick} ' for tick in ticks]
+    # plt.yticks(ticks, labels1,weight='bold')
+    plt.plot(challenges1,responses1,'o',markersize=0.4,color='#F81506',label='HRS')
+    plt.title('Relation between challenge and response',fontweight='bold',fontsize=16)
+    plt.xlabel('Challenge',fontweight='bold',fontsize=14)
+    plt.ylabel('Response',fontweight='bold',fontsize=14)
+    plt.legend(fontsize=12)
+    plt.tight_layout()
+    plt.savefig('./results/ChaRes/deco_HRS_ch_rsp.png',format = 'PNG' , dpi = 300)
     
-    # plt.show() 
+    plt.show() 
     
     
 if __name__ == "__main__":

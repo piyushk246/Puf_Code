@@ -248,25 +248,25 @@ class puf_design:
         return challenges, responses
     
 
-if __name__ == '__main__':
+# if __name__ == '__main__':
 
 
-    # # Create an instance of RRAMArrayArchitecture2048
+#     # # Create an instance of RRAMArrayArchitecture2048
 
             
-    rram = RRAMArrayArchitecture(2048, 2048)
+#     rram = RRAMArrayArchitecture(2048, 2048)
     
-    # usecols='E' == LRS
-    populator = RRAMArrayElementAssign(r'fig5(b).xlsx', usecols='B', skiprows=[1, 2])
-    # Load the data from the Excel sheet
-    populator.load_data()
-    # Populate the RRAM array with the data
-    populator.populate(rram)
-    # rram.display_architecture()
-    array = rram.get_array()
-    # print("Returned Array:",array)
+#     # usecols='E' == LRS
+#     populator = RRAMArrayElementAssign(r'fig5(b).xlsx', usecols='B', skiprows=[1, 2])
+#     # Load the data from the Excel sheet
+#     populator.load_data()
+#     # Populate the RRAM array with the data
+#     populator.populate(rram)
+#     # rram.display_architecture()
+#     array = rram.get_array()
+#     # print("Returned Array:",array)
     
-    file_name = "./decode_ch16_rsp"
-    PUF = puf_design()
-    # def Decoder_challenge_2response(self, array,  ref_res, col_page, challenge_len, select_line, count,file_name):
-    PUF.Decoder_challenge_2response(array = array,  ref_res = 8.15, col_page =32, challenge_len =16, select_line = 11, count= 16, file_name = file_name)
+#     file_name = "./decode_ch16_rsp"
+#     PUF = puf_design()
+#     # def Decoder_challenge_2response(self, array,  ref_res, col_page, challenge_len, select_line, count,file_name):
+#     PUF.Decoder_challenge_2response(array = array,  ref_res = 8.15, col_page =32, challenge_len =16, select_line = 11, count= 16, file_name = file_name)
