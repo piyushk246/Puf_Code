@@ -34,7 +34,7 @@ def get_response_Deco(challenge_row, challenge_col, rram_cell, ref_res, col_page
     sel_col = col_mux(challenge_col)
     
     count = 0
-    for _ in range((len(challenge_row) + len(challenge_col))):
+    for _ in range(2*(len(challenge_row) + len(challenge_col))):
         response.append(1 if rram_cell[sel_row][sel_col + count] > ref_res else 0)
         count += col_page
     return np.array(response)

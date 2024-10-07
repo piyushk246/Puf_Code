@@ -53,7 +53,7 @@ class puf_design:
         sel_col = self.col_mux(challenge_col)
         
         count = 0
-        for _ in range((len(challenge_row) + len(challenge_col))):
+        for _ in range(2*(len(challenge_row) + len(challenge_col))):
             response.append(1 if rram_cell[sel_row][sel_col + count] > ref_res else 0)
             count += col_page
         return np.array(response)
@@ -204,8 +204,8 @@ class puf_design:
 
             # print(len(challenge_col1))
             # Converting challenges to its decimal equivalent
-            challenges = self.converts_decimal((count-1), challenge_new, challenges)
-            print(challenges)
+            challenges = self.converts_decimal((2*count-1), challenge_new, challenges)
+            # print(challenges)
 
             # Getting the response using get_response
             # get_response(challenge_row, challenge_col, array, ref_res,  4)

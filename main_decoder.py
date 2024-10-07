@@ -60,7 +60,7 @@ def main_HRS(challenge_size):
     # file_name = "diff_output_16bit(LRS)rsp"
     file_name = "./results/same(HRS)_ch16_rsp"
     #         def Dec0_challenge_2response(self, array,  ref_res, col_page, challenge_len, select_line, count, block,file_name):
-    challenges1, responses1 = Puf.Dec0_challenge_2response( array, ref_res,  col_page,    challenge_len= 16,    select_line=10,      count = 16, 1,file_name)
+    challenges1, responses1 = Puf.Dec0_challenge_2response( array, ref_res,  col_page,    challenge_len= 16,    select_line=10,      count = 16, file_name = file_name )
 
     #         #PLOTING WITHOUT THE MATRIC
     # plt.hist(responses1,bins=16,edgecolor='k', alpha=0.7,label='HRS')
