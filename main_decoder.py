@@ -115,7 +115,7 @@ def main_LRS(challenge_size):
     plt.ylabel('Response',fontweight='bold',fontsize=14)
     plt.legend(fontsize=12)
     plt.tight_layout()
-    # plt.savefig('./results/ChaRes/LRS_ch_rsp.png',format = 'PNG' , dpi = 300)
+    plt.savefig('./results/ChaRes/deco_LRS_ch_rsp.png',format = 'PNG' , dpi = 300)
     
     plt.show() 
     
