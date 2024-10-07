@@ -209,7 +209,7 @@ class puf_design:
 
             # Getting the response using get_response
             # get_response(challenge_row, challenge_col, array, ref_res,  4)
-            response1 = self.get_response(challenge_row1, challenge_col1, array, ref_res, col_page)
+            response1 = self.get_response_Deco(challenge_row1, challenge_col1, array, ref_res, col_page)
             
             # if block == 2:
             #     # Reverse challenge_row1 and challenge_col1 for response2
@@ -230,7 +230,7 @@ class puf_design:
             #     responses_binary.append(response)
 
             response = response1
-            responses = self.converts_decimal((count-1), response, responses)
+            responses = self.converts_decimal((2*count-1), response, responses)
             # print(responses)
             responses_binary.append(response)
 
