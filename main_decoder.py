@@ -77,8 +77,8 @@ def main_LRS(challenge_size):
     # cr.C_vs_R(challenges1, responses1)
 
 
-    ideal = 2048
-    bin = 32
+    ideal = 4096
+    bin = 16
             #PLOTING WITH THE MATRIC
     plt.figure(0)
     counts, bins, bars = plt.hist(responses1, bins=bin, alpha=0.6, edgecolor='black',label='LRS')
@@ -142,7 +142,7 @@ def main_HRS(challenge_size):
 
     # Populate the RRAM array with the data
     populator.populate(rram)
-    
+    32
     # rram.display_architecture()
     array = rram.get_array()
     
@@ -180,8 +180,8 @@ def main_HRS(challenge_size):
     # cr.C_vs_R(challenges1, responses1)
 
 
-    ideal = 2048
-    bin = 32
+    ideal = 4096
+    bin = 16
             #PLOTING WITH THE MATRIC
     plt.figure(0)
     counts, bins, bars = plt.hist(responses1, bins=bin, alpha=0.6, edgecolor='black',label='HRS')
@@ -227,5 +227,5 @@ if __name__ == "__main__":
     challenge_size= 16
     
     main_LRS(challenge_size)
-    # main_HRS(challenge_size)
+    main_HRS(challenge_size)
 
