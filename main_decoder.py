@@ -159,7 +159,7 @@ def main_HRS(challenge_size):
     challenge= [1,0,1,0,0,0,1,1,1,0,1,0,0,0,1,1]
 
 
-    # file_name = "diff_output_16bit(LRS)rsp"
+    # file_name = "deco_output_16bit(LRS)rsp"
     file_name = "./results/deco(HRS)_ch16_rsp"
     #         def Dec0_challenge_2response(self, array,  ref_res, col_page, challenge_len, select_line, count, block,file_name):
     # challenges1, responses1 = Puf.Dec0_challenge_2response( array, ref_res,  col_page,    challenge_len= 16,    select_line=11,      count = 16, file_name = file_name )

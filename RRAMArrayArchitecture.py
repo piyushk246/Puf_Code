@@ -1,6 +1,7 @@
 import pandas as pd
 import numpy as np
 import math
+import random
 # import scipy.sparse as sparse
 
 class RRAMArrayArchitecture:
@@ -26,11 +27,18 @@ class RRAMArrayArchitecture:
 
 
 class RRAMArrayElementAssign:
-    def __init__(self, excel_path, usecols='B', skiprows=None):
+    def __init__(self, excel_path, usecols, skiprows=None):
         self.excel_path = excel_path
         self.usecols = usecols
         self.skiprows = skiprows if skiprows is not None else []
         self.data = None
+
+
+    def load_data_shuffle (self):
+        # Read the Excel file and extract data as a flattened array
+        df = pd.read_excel(self.excel_path, usecols=self.usecols, skiprows=self.skiprows)
+        self.data = df.to_numpy().flatten()
+        random.shuffle(self.data)
 
     def load_data(self):
         # Read the Excel file and extract data as a flattened array
@@ -94,7 +102,42 @@ class RRAMArrayElementAssign:
 
         return blocks
     
+    def populate_with_random_data(self, rram_array, num_blocks):
+        if self.data is None:
+            raise ValueError("Data not loaded. Call load_data() before populating the array.")
+        
+        if num_blocks <= 0:
+            raise ValueError("Number of blocks must be a positive integer.")
+        
+        data_length = len(self.data)
+        total_elements = rram_array.rows * rram_array.columns
+        block_size = total_elements // num_blocks
+
+        # Create a list to store the 2D arrays (blocks)
+        blocks = [np.zeros((rram_array.rows, rram_array.columns), dtype=object) for _ in range(num_blocks)]
+        data_index = 0
+
+        for block_num in range(num_blocks):
+            for i in range(rram_array.rows):
+                for j in range(rram_array.columns):
+                    if block_num * block_size + (i * rram_array.columns + j) < (block_num + 1) * block_size:
+                        blocks[block_num][i][j] = self.data[data_index % data_length]
+                        data_index += 1
+        return blocks
     
+    
+    
+
+if __name__ == "__main__":
+    # Example usage
+    assigner = RRAMArrayElementAssign(r'C:\Users\Piyush\Desktop\sem3\PUF\Code\fig5(b).xlsx', usecols='B', skiprows=[1, 2])
+
+    # Load the data from the Excel sheet
+    assigner.load_data()
+
+    rram = RRAMArrayArchitecture(1024, 1024) # for the 64 bits
+
+    assigner.populate(rram)
     
 # #input the row and columns
 # row = int(input("Enter the row: "))

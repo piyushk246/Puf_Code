@@ -47,16 +47,38 @@ class puf_design:
             count += col_page
         return np.array(response)
 
-    def get_response_Deco(self,challenge_row, challenge_col, rram_cell, ref_res, col_page):
+    # def get_response_Deco(self,challenge_row, challenge_col, rram_cell, ref_res, col_page):
+    #     response = []
+    #     sel_row = self.row_decoder(challenge_row)
+    #     sel_col = self.col_mux(challenge_col)
+        
+    #     count = 0
+    #     for _ in range(4*(len(challenge_row) + len(challenge_col))):
+    #         response.append(1 if rram_cell[sel_row][sel_col + count] > ref_res else 0)
+    #         count += col_page
+    #     return np.array(response)
+
+
+    def get_response_Deco(self, challenge_row, challenge_col, rram_cell, ref_res, col_page):
         response = []
         sel_row = self.row_decoder(challenge_row)
         sel_col = self.col_mux(challenge_col)
         
         count = 0
-        for _ in range(2*(len(challenge_row) + len(challenge_col))):
-            response.append(1 if rram_cell[sel_row][sel_col + count] > ref_res else 0)
+        full_response = []
+        for i in range(4 * (len(challenge_row) + len(challenge_col))):
+            full_response.append(1 if rram_cell[sel_row][sel_col + count] > ref_res else 0)
             count += col_page
+        
+        # If the row is odd, select only odd-indexed elements from the full_response
+        if sel_row % 2 == 1:
+            response = [full_response[i] for i in range(len(full_response)) if i % 2 == 1]
+        else:
+            # If the row is even, select only even-indexed elements from the full_response
+            response = [full_response[i] for i in range(len(full_response)) if i % 2 == 0]
+
         return np.array(response)
+
 
     # # puf_instance will give the responses of various pufs
     # def puf_instances(self,challenge_row, challenge_col, res_f, row, col, ref_res, col_page):
@@ -204,7 +226,7 @@ class puf_design:
 
             # print(len(challenge_col1))
             # Converting challenges to its decimal equivalent
-            challenges = self.converts_decimal((2*count-1), challenge_new, challenges)
+            challenges = self.converts_decimal((count-1), challenge_new, challenges)
             # print(challenges)
 
             # Getting the response using get_response
