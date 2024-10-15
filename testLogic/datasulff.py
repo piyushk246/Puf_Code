@@ -6,7 +6,6 @@ import random
 # df = pd.read_excel(r'./testLogic/data.xlsx',skiprows=1)
 # df = pd.read_excel(r"C:\\Users\\Piyush\\Desktop\\sem3\\PUF\\RRAM_DATA\\generated_skewed_gaussian_data.xlsx")
 df = pd.read_excel(r"./testLogic/generated_skewed_gaussian_data.xlsx")
-# print(df    )
 
 # Convert the DataFrame to a NumPy array and flatten it into a 1D list
 x1 = df.to_numpy().flatten().tolist()
