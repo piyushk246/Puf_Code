@@ -108,12 +108,12 @@ class HammingDistanceCalculator:
         # plt.savefig('./results/HD/HD_same(HRS).png', format='PNG', dpi=300)
 
         plt.tight_layout()
-        plt.savefig(f'./results/HD/HD_{architectire}({state}).png', format='PNG', dpi=300)
+        # plt.savefig(f'./results/HD/HD_random{architectire}({state}).png', format='PNG', dpi=300)
 
         distances = []
         time.sleep(5)
         # Show the plot
-        # plt.show()
+        plt.show()
         # plt.show(block=False)
 
         # return 1
@@ -131,33 +131,38 @@ if __name__ == "__main__":
     # state = "HRS"
     state = ["LRS","HRS"]
 
-    noOfRes = 26000
+    noOfRes = 20000
 
-    for i in range(2):
-        architectire = arch[i]
-        print(architectire)
-        if (architectire == "same"):
-            for state_s in state:
-                if (state_s == "LRS" ):
-                    hd_calculator = HammingDistanceCalculator(r'./results/same(LRS)_ch16_rsp_32.csv', usecols=[1])
-                    hd_calculator.inter_chip(architectire,state_s,noOfRes)
-                elif (state_s == "HRS" ):
-                    hd_calculator = HammingDistanceCalculator(r'./results/same(HRS)_ch16_rsp_32.csv', usecols=[1])
-                    hd_calculator.inter_chip(architectire,state_s,noOfRes)
+    # for i in range(2):
+    #     architectire = arch[i]
+    #     print(architectire)
+    #     if (architectire == "same"):
+    #         for state_s in state:
+    #             if (state_s == "LRS" ):
+    #                 hd_calculator = HammingDistanceCalculator(r'./results/same(LRS)_ch16_rsp_32.csv', usecols=[1])
+    #                 hd_calculator.inter_chip(architectire,state_s,noOfRes)
+    #             elif (state_s == "HRS" ):
+    #                 hd_calculator = HammingDistanceCalculator(r'./results/same(HRS)_ch16_rsp_32.csv', usecols=[1])
+    #                 hd_calculator.inter_chip(architectire,state_s,noOfRes)
 
-        elif (architectire == "diff"):
-            for state_d in state:
-                if (state_d == "LRS" ):
-                    hd_calculator = HammingDistanceCalculator(r'./results/diff(LRS)_ch16_rsp_32.csv', usecols=[1])
-                    hd_calculator.inter_chip(architectire,state_d,noOfRes)
-                elif (state_d == "HRS" ):
-                    hd_calculator = HammingDistanceCalculator(r'./results/diff(HRS)_ch16_rsp_32.csv', usecols=[1])
-                    hd_calculator.inter_chip(architectire,state_d,noOfRes)
+    #     elif (architectire == "diff"):
+    #         for state_d in state:
+    #             if (state_d == "LRS" ):
+    #                 hd_calculator = HammingDistanceCalculator(r'./results/diff(LRS)_ch16_rsp_32.csv', usecols=[1])
+    #                 hd_calculator.inter_chip(architectire,state_d,noOfRes)
+    #             elif (state_d == "HRS" ):
+    #                 hd_calculator = HammingDistanceCalculator(r'./results/diff(HRS)_ch16_rsp_32.csv', usecols=[1])
+    #                 hd_calculator.inter_chip(architectire,state_d,noOfRes)
 
             
 
     # Assuming the second column in the CSV (index 1)
+    architectire = arch[1]
+    hd_calculator = HammingDistanceCalculator(r'./results/random(HRS)_ch16_rsp_32.csv', usecols=[1])
+    hd_calculator.inter_chip(architectire,"HRS",noOfRes)
+
     # hd_calculator = HammingDistanceCalculator(r'./results/same(HRS)_ch16_rsp_32.csv', usecols=[1])
+    
     # hd_calculator = HammingDistanceCalculator(r'./results/same(LRS)_ch16_rsp_32.csv', usecols=[1])
     # hd_calculator = HammingDistanceCalculator(r'./results/diff(LRS)_ch16_rsp_32.csv', usecols=[1])
     # hd_calculator = HammingDistanceCalculator(r'./results/diff(HRS)_ch16_rsp_32.csv', usecols=[1])
