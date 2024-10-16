@@ -33,7 +33,14 @@ def main_HRS(challenge_size):
     assigner.load_data()
     # assigner.load_data_shuffle()
     # Populate the RRAM array with the data
-    array= assigner.populate_with_blocks(rram, num_blocks=2)
+
+
+    # array= assigner.populate_with_blocks(rram, num_blocks=2)
+    assigner.populate(rram)
+    
+    # rram.display_architecture()
+    array = rram.get_array()
+    
     
     Puf = puf_design()
     challenge= [1,0,1,0,0,0,1,1,1,0,1,0,0,0,1,1]
@@ -41,8 +48,11 @@ def main_HRS(challenge_size):
     # def challenge_response(self, array,  ref_res, col_page, challenge, select_line, challenge_size, block):
     # def challenge_response_diff(self, array1, array2, ref_res, col_page, challenge, select_line, count):
     # challenges1, responses1 = Puf.challenge_response( array[0], ref_res,   64,    challenge,    10,      16,              1 )
-    file_name = "./results/random(HRS)_ch16_rsp"
-    challenges1, responses1 = Puf.challenge_response_diff( array[0], array[1], ref_res,   64,    challenge,    10,      16,file_name)
+    # file_name = "./results/diff_random(HRS)_ch16_rsp"
+    # challenges1, responses1 = Puf.challenge_response_diff( array[0], array[1], ref_res,   64,    challenge,    10,      16,file_name)
+    
+    file_name = "./results/Same_random(HRS)_ch16_rsp"
+    challenges1, responses1 = Puf.challenge_response_same( array, ref_res,   64,    challenge,    10,      16,              2 ,file_name)
 
 
                     # ploting without the matric  
@@ -80,7 +90,7 @@ def main_HRS(challenge_size):
     # plt.legend(fontsize=10)
     
     plt.tight_layout()
-    plt.savefig(f'./results/UniqueResp/random{bin}_c16r32_hrs_metric(HRS).png',format = 'PNG' , dpi = 300)
+    plt.savefig(f'./results/UniqueResp/Same_random{bin}_c16r32_hrs_metric(HRS).png',format = 'PNG' , dpi = 300)
     
     
     
@@ -98,7 +108,7 @@ def main_HRS(challenge_size):
     plt.ylabel('Response',fontweight='bold',fontsize=14)
     plt.legend(fontsize=12)
     plt.tight_layout()
-    plt.savefig('./results/ChaRes/random_HRS_ch_rsp.png',format = 'PNG' , dpi = 300)
+    plt.savefig('./results/ChaRes/same_random_HRS_ch_rsp.png',format = 'PNG' , dpi = 300)
     
     plt.show()  
     
