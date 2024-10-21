@@ -8,6 +8,8 @@ import matplotlib.pyplot as plt
 import numpy as np
 import pandas as pd
 import math
+import csv
+import os
 
 def row_col_bit(a):
     b = math.log2(a)
@@ -31,7 +33,7 @@ def main_HRS(challenge_size):
     assigner = RRAMArrayElementAssign(r'./testLogic/datasulff.csv', usecols=[0], skiprows=[0, 1])
     # Load the data from the Excel sheet
     assigner.load_data()
-    # assigner.load_data_shuffle()
+    assigner.load_data_shuffle()
     # Populate the RRAM array with the data
 
 
@@ -67,6 +69,9 @@ def main_HRS(challenge_size):
     # plt.show()
 
                     #ploting with the matric
+
+
+
     ideal = 4096
     bin = 16
     plt.figure(0)
@@ -110,7 +115,23 @@ def main_HRS(challenge_size):
     plt.tight_layout()
     plt.savefig('./results/ChaRes/same_random_HRS_ch_rsp.png',format = 'PNG' , dpi = 300)
     
-    plt.show()  
+
+    filename = 'matrix.csv'
+    # Check if the file exists
+    if not os.path.exists(filename):
+        # Create the file if it doesn't exist
+        with open(filename, 'w',) as file:
+            print(f"File {filename} did not exist, so it was created.")
+
+
+    with open('matrix.csv', 'a', newline='') as file:
+        writer = csv.writer(file)
+        writer.writerow([msq_error])
+
+    
+
+    # plt.show()  
+    print("msq_error:",msq_error)
     
 def main_LRS(challenge_size):
     ref_res=4.43
